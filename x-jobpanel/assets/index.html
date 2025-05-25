@@ -1,0 +1,413 @@
+<html>
+
+<head>
+	<meta charset="UTF8">
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div style="overflow: none;" id="overlay" v-if="Show">
+		<v-app style="overflow: none;" class="jobpanel-app">
+			<v-main style="max-height: 100%;">
+				<v-toolbar height="55%" dark prominent>
+					<v-toolbar-title>{{ Character.firstname }} - {{ Job.Label }}
+					</v-toolbar-title>
+
+					<v-spacer></v-spacer>
+
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn v-on:click="closeNUI" icon>
+								<v-icon v-on="on">mdi-export</v-icon>
+							</v-btn>
+						</template>
+
+						<span>Stäng</span>
+					</v-tooltip>
+				</v-toolbar>
+
+				<div id="jobpanel-container">
+					<v-card tile>
+						<div id="jobpanel-homepage" v-if="ActiveNavigation === 0">
+							<v-container>
+								<v-row dense>
+									<v-col cols="6">
+										<v-card class="mx-auto" max-width="344">
+											<v-list-item>
+												<v-layout align-center justify-center>
+													<div class="text-xs-center">
+														<i class="fas fa-money-bill-alt" style="font-size: 60px;"></i>
+													</div>
+												</v-layout>
+											</v-list-item>
+
+											<v-list-item>
+												<v-layout align-center justify-center>
+													<div class="text-xs-center">
+														<p style="font-size: 25px;"><span
+																id="jobpanel-homepage-balance">{{
+																Job.Balance }}
+																SEK</span>
+														</p>
+													</div>
+												</v-layout>
+											</v-list-item>
+
+											<v-card-actions>
+												<v-layout align-center justify-center>
+													<v-btn color="success" outlined text :disabled="!hasAccess('ACCESS_THREE')"
+														@click="depositBalance()">SäTT IN
+													</v-btn>
+
+													<v-spacer></v-spacer>
+
+													<v-btn color="error" outlined text :disabled="!hasAccess('ACCESS_THREE')"
+														@click="withdrawBalance()">TA UT
+													</v-btn>
+												</v-layout>
+											</v-card-actions>
+										</v-card>
+									</v-col>
+
+
+									<v-col cols="6">
+										<v-card class="mx-auto" max-width="344">
+											<v-list-item>
+												<v-layout align-center justify-center>
+													<div class="text-xs-center">
+														<i class="fas fa-user-friends" style="font-size: 60px;"></i>
+													</div>
+												</v-layout>
+											</v-list-item>
+
+											<v-list-item>
+												<v-layout align-center justify-center>
+													<div class="text-xs-center">
+														<p style="font-size: 25px;"><span
+																id="jobpanel-homepage-character">{{
+																Employees.Characters.length }}st
+																Anställda</span>
+														</p>
+													</div>
+												</v-layout>
+											</v-list-item>
+										</v-card>
+									</v-col>
+								</v-row>
+							</v-container>
+						</div>
+						<div id="jobpanel-employees" v-else-if="ActiveNavigation === 1">
+							<v-card>
+								<v-card-title>
+									Anställda ({{ Employees.Characters.length }}st)
+									<v-spacer></v-spacer>
+
+									<v-layout align-center justify-center>
+										<v-btn color="success" outlined text :disabled="!hasAccess('ACCESS_ONE')"
+											@click="hirePerson()">ANSTäLL</v-btn>
+									</v-layout>
+									</v-card-actions>
+
+									<v-text-field v-model="Employees.Search" append-icon="mdi-magnify"
+										label="Sök anställd" single-line hide-details></v-text-field>
+								</v-card-title>
+								<v-data-table :footer-props="{
+										showFirstLastPage: true,
+										itemsPerPageText: 'Anställda per sida',
+										itemsPerPageOptions: [10]
+									}" no-results-text="Inga resultat hittades..." no-data-text="Inga anställda kunde laddas in..."
+									:headers="Employees.Headers" :items="Employees.Characters"
+									:search="Employees.Search">
+									<template v-slot:item="Character">
+										<tr>
+											<td>{{ Character.item.Name }}</td>
+											<td style="color:rgba(255, 0, 0, 0.664); font-weight: bold;">
+												{{ Character.item.CharacterId }}</td>
+											<td>
+												<v-edit-dialog :return-value.sync="Character.item.Grade"
+													@save="editGrade(Character.item)">
+													{{ Character.item.Grade }}
+													<template v-slot:input>
+														<v-autocomplete :disabled="!hasAccess('ACCESS_TWO')"
+															:items="Job.Grades" v-model="Character.item.Grade"
+															label="Rang (ENTER för att spara)">
+														</v-autocomplete>
+													</template>
+												</v-edit-dialog>
+											</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(76, 177, 51, 0.534);" v-bind="attrs"
+															v-on="on" medium dense
+															@click="manageCharacter(Character.item)">
+															mdi-information-outline
+														</v-icon>
+													</template>
+													<span>Hantera - {{ Character.item.Name }}</span>
+												</v-tooltip>
+
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(194, 36, 31, 0.534);" v-bind="attrs"
+															v-on="on" medium dense
+															@click="kickCharacter(Character.item)">
+															mdi-delete
+														</v-icon>
+													</template>
+													<span>Sparka - {{ Character.item.Name }}</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+
+						<div id="jobpanel-vehicles" v-else-if="ActiveNavigation === 2">
+							<v-card>
+								<v-card-title>
+									Fordon ({{ Vehicles.Vehicles.length }}st)
+									<v-spacer></v-spacer>
+
+									<v-text-field v-model="Vehicles.Search" append-icon="mdi-magnify" label="Sök fordon"
+										single-line hide-details></v-text-field>
+								</v-card-title>
+								<v-data-table :footer-props="{
+										showFirstLastPage: true,
+										itemsPerPageText: 'Fordon per sida',
+										itemsPerPageOptions: [10]
+									}" no-results-text="Inga resultat hittades..." no-data-text="Inga fordon kunde laddas in..."
+									:headers="Vehicles.Headers" :items="Vehicles.Vehicles" :search="Vehicles.Search">
+									<template v-slot:item="Vehicle">
+										<tr>
+											<td>{{ Vehicle.item.VehicleLabel }}</td>
+											<td style="color:rgba(54, 109, 37, 0.664); font-weight: bold;">
+												{{ Vehicle.item.Price }}
+											</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(56, 170, 28, 0.434);" v-bind="attrs"
+															v-on="on" medium dense @click="orderVehicle(Vehicle.item)">
+															mdi-receipt
+														</v-icon>
+													</template>
+													<span>Beställ - {{ Vehicle.item.VehicleLabel }}</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+
+						<div id="jobpanel-invoices" v-else-if="ActiveNavigation === 3">
+							<v-card>
+								<v-card-title>
+									Fakturor ({{ Invoices.Invoices.length }}st)
+									<v-spacer></v-spacer>
+
+									<v-text-field v-model="Invoices.Search" append-icon="mdi-magnify"
+										label="Sök faktura" single-line hide-details></v-text-field>
+								</v-card-title>
+								<v-data-table :footer-props="{
+										showFirstLastPage: true,
+										itemsPerPageText: 'Fakturor per sida',
+										itemsPerPageOptions: [10]
+									}" no-results-text="Inga resultat hittades..." no-data-text="Inga fakturor kunde laddas in..."
+									:headers="Invoices.Headers" :items="Invoices.Invoices" :search="Invoices.Search">
+									<template v-slot:item="Invoice">
+										<tr>
+											<td>
+												{{ Invoice.item.Id }}
+											</td>
+											<td>
+												{{ Invoice.item.Name }}
+											</td>
+											<td style="color:rgba(255, 0, 0, 0.664); font-weight: bold;">
+												{{ Invoice.item.Receiver }}
+											</td>
+											<td>
+												{{ Invoice.item.TotalAmount }} kr
+											</td>
+											<td>
+												{{ Invoice.item.Date }}
+											</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(93, 148, 79, 0.561);" v-bind="attrs"
+															v-on="on" medium dense @click="openInvoice(Invoice.item)">
+															mdi-file-find
+														</v-icon>
+													</template>
+
+													<span>öppna</span>
+												</v-tooltip>
+
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(194, 36, 31, 0.534);" v-bind="attrs"
+															v-on="on" medium dense @click="cancelInvoice(Invoice.item)">
+															mdi-delete
+														</v-icon>
+													</template>
+
+													<span>Annullera</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+					</v-card>
+				</div>
+
+				<v-dialog v-model="Dialog.Show" max-width="400">
+					<v-card>
+						<v-card-title class="headline">{{ Dialog.Header }}</v-card-title>
+
+						<v-card-text>
+							{{ Dialog.Input.Show ? "" : Dialog.Text }}
+
+							<span style="color: red;"> {{ Dialog.Input.Rule ? Dialog.Input.Rule : "" }} </span>
+
+							<v-text-field v-if="Dialog.Input.Show" :label="Dialog.Input.Label"
+								v-model="Dialog.Input.Value" :hint="Dialog.Input.Hint">
+							</v-text-field>
+						</v-card-text>
+
+						<v-card-actions>
+							<v-spacer></v-spacer>
+
+							<v-btn outlined :color="Dialog.CancelButtonColor + ' darken-1'" text
+								@click="Dialog.ButtonCallback(false)">
+								{{ Dialog.CancelButton }}
+							</v-btn>
+
+							<v-btn outlined :color="Dialog.ConfirmButtonColor + ' darken-1'" text
+								@click="Dialog.ButtonCallback(true)">
+								{{ Dialog.ConfirmButton }}
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+
+				<v-dialog v-model="CharacterDialog.Show" max-width="600px">
+					<v-card>
+						<v-card-title>
+							<span class="headline">{{ CharacterDialog.Character.Name }}</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<v-row>
+									<v-col cols="12" sm="6">
+										<v-text-field label="För- och efternamn"
+											v-model="CharacterDialog.Character.Name" readonly required>
+										</v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6">
+										<v-text-field label="Personnummer"
+											v-model="CharacterDialog.Character.CharacterId" readonly required>
+										</v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6">
+										<v-text-field label="Omsättning"
+											:value="CharacterDialog.Character.Revenue + ' kr'" readonly required>
+										</v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6">
+										<v-text-field label="Tjänstetimmar"
+											:value="Math.floor(CharacterDialog.Character.MinutesInDuty / 60) + ' timmar' + ' och ' + Math.floor(CharacterDialog.Character.MinutesInDuty % 60) + ' minuter'"
+											readonly required></v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6">
+										<v-checkbox :disabled="!Job.Boss"
+											v-model="CharacterDialog.Character.Permissions.ACCESS_ONE"
+											@change="updatePermission(CharacterDialog.Character, 'ACCESS_ONE')">
+											<template v-slot:label>
+												<div>
+													HR Behörighet 1
+												</div>
+											</template>
+										</v-checkbox>
+									</v-col>
+									<v-col cols=" 12" sm="6">
+										<v-checkbox :disabled="!Job.Boss"
+											v-model="CharacterDialog.Character.Permissions.ACCESS_TWO"
+											@change="updatePermission(CharacterDialog.Character, 'ACCESS_TWO')">
+											<template v-slot:label>
+												<div>
+													HR Behörighet 2
+												</div>
+											</template>
+										</v-checkbox>
+									</v-col>
+									<v-col cols=" 12" sm="6">
+										<v-checkbox :disabled="!Job.Boss"
+													v-model="CharacterDialog.Character.Permissions.ACCESS_THREE"
+													@change="updatePermission(CharacterDialog.Character, 'ACCESS_THREE')">
+											<template v-slot:label>
+												<div>
+													Ekonomiansvarig
+												</div>
+											</template>
+										</v-checkbox>
+									</v-col>
+								</v-row>
+							</v-container>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="red darken-1" text @click="CharacterDialog.Show = false">
+								STäNG
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+
+				<v-bottom-navigation v-model="ActiveNavigation" dark grow color="green lighten-3">
+					<v-btn>
+						<span>Företag</span>
+						<v-icon>mdi-domain</v-icon>
+					</v-btn>
+
+					<v-btn :disabled="!hasAccessToEmployees()">
+						<span>Anställda</span>
+						<v-icon>mdi-account-group</v-icon>
+					</v-btn>
+
+					<v-btn :disabled="!hasAccess('ACCESS_THREE')">
+						<span>Fordon</span>
+						<v-icon>mdi-car-outline</v-icon>
+					</v-btn>
+
+					<v-btn :disabled="!hasAccess('ACCESS_THREE')">
+						<span>Fakturor</span>
+						<v-icon>mdi-receipt</v-icon>
+					</v-btn>
+				</v-bottom-navigation>
+			</v-main>
+		</v-app>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+	<script src="js/jobpanel.js"></script>
+</body>
+
+</html>

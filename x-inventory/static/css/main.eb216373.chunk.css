@@ -1,0 +1,4402 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway&display=swap);
+
+@import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    --main-color: rgba(50, 64, 86, 0.74);
+    --main-color-dark: rgba(31, 40, 54, 0.78);
+    --main-color-light: rgba(50, 64, 86, 0.78);
+    --secondary-color: #fff;
+    font-family: 'Poppins', sans-serif !important;
+    color: #fff;
+    
+}
+::-webkit-scrollbar,
+::-webkit-scrollbar-button {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--main-color-light);
+    border: 0 #99AAB5;
+    
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #99AAB5;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+    border: 0 #99AAB5;
+    
+}
+::-webkit-scrollbar-track:hover {
+    background: hsla(0, 0%, 40%, 0);
+}
+::-webkit-scrollbar-track:active {
+    background: rgba(51, 51, 51, 0);
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.cash-display {
+    position: absolute;
+    padding: 10px;
+    text-align: center;
+    width: 9%;
+    overflow: hidden;
+	left: 48.5%;
+	top:20%;
+	transform: translate(-49%, -50%);
+    overflow: hidden;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid rgba(58, 64, 69, 0.397);
+    border-radius: 6px;
+    background: rgba(35, 39, 42, 0.753);
+}
+  
+.button-input::placeholder {
+    color: #fff;
+    opacity: 1;
+}
+
+  .cash-amount {
+    font-size: 48px;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+
+.overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(42, 0, 70, 0);
+    bottom: 0%;
+}
+
+.inventory-money-container {
+    width: 10%;
+    height: 30%;
+    margin-top: 30.5%;
+    margin-left: 45%;
+    position: absolute;
+}
+.special-slot-container {
+    position: absolute;
+    width: 29%;
+    margin-left: 25%;
+    margin-top: 35%;
+}
+.inventory-money {
+    background: rgba(58, 64, 69, 0.550);
+    margin-bottom: 10%;
+    padding: 6%;
+    position: relative;
+    border-top: 2px solid #b072da;
+}
+.overlay-inner {
+    transform: scale(0.85);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.inventory-info-box {
+    position: absolute;
+    
+    padding: 0.8%;
+    margin-top: 19%;
+    margin-left: 41.51%;
+    
+    background: rgba(35, 39, 42, 0.753);
+    border: 1px solid #b072da;
+    border-radius: 5px;
+    color: #fff;
+    z-index: 20;
+    opacity: 0;
+    width: 14%;
+    min-height: 42%;
+    max-height: 50%;
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+.inventory-info-box-item-button {
+    background-color: rgba(35, 39, 42, 0.753);
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* Adjust as needed */
+    bottom: 15%;
+    font-weight: bold;
+    padding: 0.4em 1em;
+    display: inline-block;
+    line-height: normal;
+    margin-right: 0.1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: visible;
+    width: 25%;
+    height: 5%;
+}
+
+
+.inventory-info-box-item-button:hover{
+	border: 1px solid #b072da;
+	color: #b072da;
+}
+
+.MuiButtonBase-root {
+    background: rgba(61, 61, 61, 0.2);
+    color: #fff;
+    font-weight: bold;
+}
+
+.MuiButtonBase-root:hover {
+    background: rgba(61, 61, 61, 0);
+}
+
+.inventory-info-box-item-label {
+    font-size: 150%;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    border-bottom: solid 3px #99AAB5;
+}
+.inventory-info-box-item-text {
+    position: absolute;
+    text-align: center;
+    padding: 5%;
+    font-size: 105%;
+    width: 80%;
+    height: 50%;
+    -webkit-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    bottom: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 2%;
+    top: calc(8% + 50%);
+}
+
+/* For the second element, adjust the top value to create separation */
+.inventory-info-box-item-text + .inventory-info-box-item-text  {
+    top: calc(8% + 8% + 50%); /* Adjust this value to control the separation */
+}
+
+.inventory-info-box-item-text + .inventory-info-box-item-text + .inventory-info-box-item-text {
+    top: calc(8% + 8% + 8% + 50%); /* Adjust this value to control the separation */
+}
+
+.inventory-info-box-item-text + .inventory-info-box-item-text + .inventory-info-box-item-text + .inventory-info-box-item-text  {
+    top: calc(8% + 8% + 8% + 8% + 50%); /* Adjust this value to control the separation */
+}
+
+
+.inventory-info-box-item-image {
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 2%; /* Adjust the top value to create space between the two elements */
+    background-color: #333;
+    z-index: -1;
+}
+
+.inventory-box-logo {
+    position: absolute;
+    
+    left: 41%;
+    width: 18%;
+    top: 0%;
+    height: 40%;
+    opacity: 100.0;
+}
+#inventory-money-bank:hover #inventory-money-code {
+    opacity: 1;
+}
+.inventory-money:hover {
+    opacity: 0.9;
+}
+.inventory-money-code {
+    background: rgba(58, 64, 69, 0.550);
+    width: 24%;
+}
+#inventory-money-code:hover {
+    opacity: 0.9;
+}
+#inventory-money-code {
+    opacity: 1;
+}
+.inventory-money-label {
+    text-align: center;
+    font-weight: 700;
+    font-size: 120%;
+}
+.inventory-money-money {
+    text-align: center;
+}
+.inventory-box-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.inventory-box-label {
+    position: absolute;
+    margin-top: -4.6%;
+}
+.inventory-box {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 35%;
+    height: 80%;
+    margin: auto;
+    overflow: auto;
+    padding: 0.3%;
+}
+.inventory-box-tabs {
+    width: 33.2%;
+    margin-top: -2.8%;
+    height: 4%;
+    position: absolute;
+    z-index: 99999;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.inventory-box-tab {
+    float: left;
+    margin-top: 2%;
+    margin-right: 3%;
+    min-width: 26%;
+    text-align: center;
+    text-shadow:
+    -1px -1px 0 #000, /* Vänster upp */
+     1px -1px 0 #000, /* Höger upp */
+    -1px  1px 0 #000, /* Vänster ner */
+     1px  1px 0 #000; /* Höger ner */
+    margin-left: 0.38%;
+    padding: 1%;
+    z-index: 99999;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700;
+    font-size: large;
+    letter-spacing: 2px;
+}
+
+.inventory-box-tab {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .inventory-box-tab:before,
+  .inventory-box-tab:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #FFD700;
+    box-shadow: 0 0 20px #FFD700;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .inventory-box-tab:before {
+    left: 0;
+  }
+  
+  .inventory-box-tab:after {
+    right: 0;
+  }
+  
+  .inventory-box-tab:hover:before,
+  .inventory-box-tab:hover:after {
+    width: 50%;
+  }
+  
+  
+
+.inventory-vikt-bar {
+	z-index: 99999;
+	margin-left: 5.38%;
+	float: left;
+	width: 15%;
+	
+}
+
+.inventory-progress {
+  height: 100%;
+  width: 10%;
+  transition: width 0.5s ease;
+  position: relative;
+  text-align: center;
+  font-size: 13px;
+  line-height: 20px;
+  background-color: #b072da67;
+  border: 1px solid #b072da67;
+  box-shadow: 0 0 10px #b072da67;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+ 
+}
+
+.meter {
+  width: 92%;
+  height: 20px;
+  background-color: rgba(58, 64, 69, 0.550);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  bottom: 100px;
+  margin-left: 1px;
+}
+
+.inventory-box-tab-selected {
+    color: #b072da;
+    border-bottom: 2px solid #b072da;
+
+}
+
+
+.leftslot:nth-child(-n + 5) {
+    position: relative;
+    counter-increment: slot-counter;
+}
+
+.leftslot:nth-child(-n + 5)::before {
+    content: counter(slot-counter);
+    color: #fff;
+    z-index: 999;
+    position: absolute;
+    bottom: 25px;
+    left: 25%;
+    right: 25%;
+	text-align: center;
+	font-weight: bold;
+    font-size: 20px;
+}
+
+.inventory-slot {
+	background: rgba(35, 39, 42, 0.753);
+    color: #fff;
+    margin: 0.4%; /* Lägg till ett mellanrum mellan slotsen */
+	border: 1px solid rgba(58, 64, 69, 0.397);
+    border-radius: 5px;
+}
+
+.inventory-slot,
+.inventory-slot-active {
+    float: left;
+    width: 18%;
+    height: 14vh;
+    border: 1px solid rgba(53, 58, 61, 0.774);
+    border-radius: 5px;
+    position: relative;
+    margin: 0.4%; /* Lägg till ett mellanrum mellan slotsen */
+    
+}
+.inventory-slot-active {
+    background-color: rgba(35, 39, 42, 0.753);
+	border: 1px solid #b072da;
+    box-shadow: 0 0 10px #b072da;
+	color: #b072da;
+    border-radius: 5px;
+}
+.inventory-slot-label {
+    position: absolute;
+    
+    width: 100%;
+    bottom: 0;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(31, 40, 54, 0);
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+}
+.inventory-slot-number {
+    position: absolute;
+    color: #fff;
+    opacity: 1%;
+    margin-top: -5%;
+    margin-left: 2.5%;
+    font-size: 225%;
+}
+.inventory-box-amount {
+    position: absolute;
+    margin-top: -4.6%;
+    margin-left: 24%;
+    font-size: 120%;
+}
+.item {
+    position: relative;
+    height: 83%;
+}
+.item-count {
+    margin-left: 5%;
+    margin-top: 2%;
+    position: absolute;
+}
+.item-bar {
+    position: absolute;
+    background-color: transparent;
+    text-align: center;
+    margin-top: 89%;
+    max-width: 100%;
+}
+.item-image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.item-weight {
+    float: right;
+    margin-right: 6%;
+    margin-top: 2%;
+}
+.ui-draggable-dragging {
+    height: 11.6%;
+    width: 6.7%;
+}
+
+.ui-droppable-hover:not(.inventory-box-tab) {
+    background: #23272ac0 !important;
+    border: 1px solid #b072da;
+	color: #b072da;
+    box-shadow: 0 0 10px #b072da;
+}
+
+.ui-droppable-hover.inventory-box-tab {
+    background: rgba(31, 40, 54, 0.6);
+    border: none;
+  }
+
+.inventory-box-buttons {
+    color: #b072da;
+    position: absolute;
+    height: 30%;
+    width: 10%;
+	left: 48.5%;
+	top:40%;
+	transform: translate(-49%, -40%);
+    overflow: hidden;
+}
+.hidden {
+    background: repeating-linear-gradient(45deg, rgba(167, 165, 165, 0.116), rgba(62, 62, 62, 0.082) 3%);
+    height: 100%;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.button-input {
+    border: none;
+    background: #23272ac0;
+
+    color: #b072da;
+    padding: 8% 5%;
+    width: 89%;
+    text-align: center;
+
+}
+.button-input:hover {
+    background: #23272ac0;
+}
+.button-input:focus {
+    outline: none;
+}
+.inventory-info-box-animation-enter {
+    opacity: 0;
+}
+.inventory-info-box-animation-enter-active {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.inventory-info-box-animation-enter-done,
+.inventory-info-box-animation-exit {
+    opacity: 1;
+}
+.inventory-info-box-animation-exit-active {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.lds-dual-ring {
+    width: 64px;
+    height: 64px;
+    transform: scale(0.4);
+    float: right;
+    margin-top: -10%;
+    margin-right: -10%;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-color: hsla(0, 0%, 42%, 0.603) transparent;
+    border-style: solid;
+    border-width: 5px;
+    -webkit-animation: lds-dual-ring 1.2s linear infinite;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+.inventory-notification-container {
+    position: absolute;
+    width: 16%;
+    height: 110%;
+    right: 0;
+    margin-right: -8%;
+}
+.inventory-notification-container .notification {
+    padding: 7%;
+    background: var(--main-color-dark);
+    font-size: 90%;
+    margin: 2% 2% 4%;
+    border-right: 3px solid var(--secondary-color);
+}
+.inventory-notification-container .notification .notification-header {
+    text-shadow: none;
+    font-size: 110%;
+    margin-bottom: 2%;
+}
+.inventory-notification-container .notification .notification-content {
+    color: hsla(0, 0%, 100%, 0.5137254901960784);
+}
+.inventory-notification-enter {
+    opacity: 0;
+    transform: translate(200%);
+}
+.inventory-notification-enter-active {
+    opacity: 1;
+    transform: translate(0);
+    transition: 0.5s;
+}
+.inventory-notification-enter-done {
+    opacity: 1;
+}
+.inventory-notification-exit {
+    transform: scale(1);
+    opacity: 1;
+}
+.inventory-notification-exit-active {
+    transform: scale(0);
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+@-webkit-keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+.default {
+    background: url(../media/packaged_plank.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.vehicle_repairkit {
+    background: url(../media/pngwing.com_1.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.vehicle_door {
+    background: url(../media/car-door.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.vehicle_tyre {
+    background: url(../media/car-tire-png-463.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.repairkit {
+    background: url(/static/media/repairkit.f830af07.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.meth {
+    background: url(../media/meth.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.weedpot {
+    background: url(../media/Kruka_item.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.marijuana_seed {
+    background: url(../media/marijuanaseed.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.weedbud {
+    background: url(/static/media/weedbud.22f7e2c2.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.zipbag {
+    background: url(/static/media/zipbag.c7f885a9.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.zipbag1g {
+    background: url(../media/weedzipbag.png)
+        no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.coffee {
+    background: url(../media/coffee-to-go-png-3.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.umbrella {
+    background: url(../media/umbrella.png)
+        no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.meat {
+    background: url(../media/meat.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.rizla {
+    background: url(../media/rizla.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.rc_car {
+    background: url(../media/rccar.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.cocaine {
+    background: url(../media/cocaine.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.leather {
+    background: url(../media/leather.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.whiskey {
+    background: url(/static/media/whiskey.2a738bb9.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.wine {
+    background: url(../media/wine.png)
+        no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.pinacolada {
+    background: url(/static/media/pinacolada.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.daiquiri {
+    background: url(/static/media/daiquiri.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.sexonthebeach {
+    background: url(/static/media/sexonthebeach.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.pills2 {
+    background: url(https://www.apoteksgruppen.se/remote/api.opv.se/WS/General/v173/thumbnails/px400/dx32g735mtgmbjiqrxqpyh5lpa000000.Png?preset=200) no-repeat;
+    background-size: 45%;
+    background-position: 50%;
+}
+.pills3 {
+    background: url(http://cdn1.cdnme.se/4608705/9-3/t_adults_tabletter400mg_0_55073591e087c369a5241a72.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.pills4 {
+    background: url(https://www.apoteksgruppen.se/remote/api.opv.se/WS/General/v173/thumbnails/px400/mjsys6wn2ytzqwyse4zepiysqy000000.Png?preset=200) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.pills5 {
+    background: url(https://d3621p04uf65ge.cloudfront.net/snusbolaget/images/301133-g-2018-01-16-180553554/555/555/0/nicotinell-mint-nikotintablett-1-mg-96-st.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.alvedon {
+    background: url(/static/media/alvedon.528ba587.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.dextrosol {
+    background: url(/static/media/dextrosol.7d88adb8.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.water {
+    background: url(../media/water.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.dildo {
+    background: url(../media/dildo.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.laptop {
+    background: url(../media/laptop.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.nippers {
+    background: url(/static/media/avbitartang.a5461636.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.gold_necklace {
+    background: url(/static/media/guldhalsband.50169435.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.hamburger {
+    background: url(/static/media/hamburgare.a6805d5b.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.hotdog {
+    background: url(/static/media/hotdog.5b70ba49.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.condom {
+    background: url(/static/media/kondom.c3c8f0b1.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.loka {
+    background: url(/static/media/loka.70e27a8c.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.rolex_watch {
+    background: url(/static/media/rolex.dcf23a17.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.hallonsoda {
+    background: url(/static/media/hallonsoda.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.tekopp {
+    background: url(/static/media/tekopp.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake1 {
+    background: url(/static/media/cake1.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake2 {
+    background: url(/static/media/cake2.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake3 {
+    background: url(/static/media/cake3.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake4 {
+    background: url(/static/media/cake4.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake5 {
+    background: url(/static/media/cake5.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake6 {
+    background: url(/static/media/cake6.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake7 {
+    background: url(/static/media/cake7.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake8 {
+    background: url(/static/media/cake8.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake9 {
+    background: url(/static/media/cake9.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.cake10 {
+    background: url(/static/media/cake10.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.wellington_watch {
+    background: url(../media/wellington_watch.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.rullstol {
+    background: url(/static/media/rullstol.92b05b54.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.silver_necklace {
+    background: url(/static/media/silverhalsband.bfcb90dc.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.silver_ring {
+    background: url(/static/media/Silverring.66911a64.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.gold_ring {
+    background: url(../media/gold_ring.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.blood_ring {
+    background: url(/static/media/blood_ring.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.snickers {
+    background: url(/static/media/snickers.5b037dc8.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.sponge {
+    background: url(/static/media/tvattsvamp.9036da59.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.water_bucket {
+    background: url(/static/media/vattenhink.4d916049.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.watercan {
+    background: url(/static/media/watercan.c8f5ff7c.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.sprite {
+    background: url(../media/sprite.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.thermite {
+    background: url(../media/thermite.png) no-repeat;
+    background-size: 120%;
+    background-position: 50%;
+}
+.scratch_off {
+    background: url(../media/triss.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.keyboard {
+    background: url(http://www.pngmart.com/files/1/Poseidon-Gaming-Keyboard-Mechanical-PNG.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.diamond_ring {
+    background: url(/static/media/diamantring.17361975.png) no-repeat;
+    background-size: 55%;
+    background-position: 50%;
+}
+.ziptie {
+    background: url(/static/media/buntband.dd644b7f.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.vodka {
+    background: url(../media/vodka_shot.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.tequila {
+    background: url(/static/media/tequila.ed891a25.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.lockpick {
+    background: url(../media/lockpick.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.appistol {
+    background: url(../media/appistol.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.assaultrifle {
+    background: url(../media/assaultrifle.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultrifle2 {
+    background: url(../media/assaultrifle2.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultrifle3 {
+    background: url(../media/assaultrifle3.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.bat {
+    background: url(../media/bat.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.bottle {
+    background: url(../media/bottle.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.bullpuprifle {
+    background: url(data:image/png;base64,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)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.carbinerifle {
+    background: url(../media/carbinerifle.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.COMBATMG {
+    background: url(data:image/png;base64,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)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.combatpistol {
+    background: url(/static/media/WEAPON_COMBATPISTOL.2c3405d4.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.golfclub {
+    background: url(../media/golfclub.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.heavypistol {
+    background: url(../media/heavypistol.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.heavypistol2 {
+    background: url(../media/heavypistol2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.heavypistol3 {
+    background: url(../media/heavypistol3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.sniperrifle {
+    background: url(/static/media/weapon_sniperrifle.b22010a9.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.gusenberg {
+    background: url(/static/media/weapon_gusenberg.5ad503f9.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.hammer {
+    background: url(/static/media/WEAPON_HAMMER.2d501883.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.knife {
+    background: url(../media/knife.png)
+        no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.knuckle {
+    background: url(https://static.wikia.nocookie.net/gtawiki/images/b/b7/BrassKnuckles-GTAV.png/revision/latest?cb=20150708153813) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.microsmg {
+    background: url(../media/microsmg.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.microsmg2 {
+    background: url(../media/microsmg2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.microsmg3 {
+    background: url(../media/microsmg3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.nightstick {
+    background: url(../media/nightstick.png)
+        no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.pistol {
+    background: url(../media/pistol.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pistol2 {
+    background: url(../media/pistol2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pistol3 {
+    background: url(../media/pistol3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pistol50 {
+    background: url(../media/pistol50.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pistol502 {
+    background: url(../media/pistol502.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pistol503 {
+    background: url(../media/pistol503.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.poolcue {
+    background: url(../media/poolcue.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.pumpshotgun {
+    background: url(data:image/png;base64,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)
+        no-repeat;
+    background-size: 90%;
+    background-position: 50%;
+}
+.revolver {
+    background: url(../media/revolver.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.revolver2 {
+    background: url(../media/revolver2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.revolver3 {
+    background: url(../media/revolver3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.sawnoffshotgun {
+    background: url(../media/sawnoffshotgun.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.sawnoffshotgun2 {
+    background: url(../media/sawnoffshotgun2.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.sawnoffshotgun3 {
+    background: url(../media/sawnoffshotgun3.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.smg {
+    background: url(../media/smg.png)
+        no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.specialcarbine {
+    background: url(../media/specialcarbine.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.specialcarbine2 {
+    background: url(../media/specialcarbine2.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.specialcarbine3 {
+    background: url(../media/specialcarbine3.png)
+        no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.stungun {
+    background: url(../media/stungun.png)
+        no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.switchblade {
+    background: url(../media/switchblade.png)
+        no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.flashlight {
+    background: url(/static/media/weapon_flashlight.066ed699.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.medkit {
+    background: url(/static/media/medikit.c68aabac.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.bulletproof {
+    background: url(/static/media/bulletproof.c46214ac.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.fishing_rod {
+    background: url(/static/media/fishingrod.2606c22a.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.fishing_bait {
+    background: url(/static/media/bait.0db5344d.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.energy_drink {
+    background: url(/static/media/energidryck.3200fb82.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.bandage {
+    background: url(/static/media/bandage.8c94522a.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.pistol_ammo {
+    background: url(/static/media/pistol_ammo.99bb0130.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.rifle_ammo {
+    background: url(/static/media/rifle_ammo.7fc3e8e1.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.sniper_ammo {
+    background: url(/static/media/sniper_ammo.60f1bf65.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.shotgun_ammo {
+    background: url(../media/shotgun_ammo.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.smg_ammo {
+    background: url(/static/media/smg_ammo.7fb1a231.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.id_card {
+    background: url(/static/media/license.24dd4780.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.driving_license {
+    background: url(/static/media/korkort.7892e3ea.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.ripped_paper {
+    background: url(/static/media/paper.6f842f89.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.notepad {
+    background: url(/static/media/notebook.6180a5d8.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.mobile_phone {
+    background: url(https://cdn.discordapp.com/attachments/691006444027379772/700331346278744134/telefon_18823.png) no-repeat;
+    background-size: 30%;
+    background-position: 50%;
+}
+.lbphone {
+    background: url(/static/media/lbphone.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+
+.lbphoneavstangd {
+    background: url(/static/media/lbphoneavstangd.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+
+.mobile_phone_turned_off {
+    background: url(https://cdn.discordapp.com/attachments/691006444027379772/700331756720488488/teelfon_193.png) no-repeat;
+    background-size: 30%;
+    background-position: 50%;
+}
+.binoculars {
+    background: url(/static/media/kikare.476bce38.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.joint {
+    background: url(../media/joint.png)
+        no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.fiskekort {
+    background: url(/static/media/Distriktet_fiskekort.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.cigarette {
+    background: url(/static/media/cigarett.e4ff0afe.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.lighter {
+    background: url(/static/media/lighter.d2ceda76.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.fakeplate {
+    background: url(/static/media/fakeplate.33925504.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.champagne {
+    background: url(/static/media/champagne.40c3ab35.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.absint {
+    background: url(/static/media/absint.8d68a0d4.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.alkoholfriol {
+    background: url(/static/media/alkoholfriol.02c75a4a.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.rom {
+    background: url(/static/media/rom.c97f6b0e.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.mojito {
+    background: url(/static/media/mojito.69f81f48.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.vodkaredbull {
+    background: url(/static/media/vodkaredbull.4307e675.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.whiskeycola {
+    background: url(/static/media/whiskeycola.13f148b1.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.jagermeister {
+    background: url(/static/media/jagermeister.7f639adf.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.jagerbomb {
+    background: url(/static/media/jagerbomb.c3305a7e.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.colazero {
+    background: url(/static/media/colazero.486c03c5.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.fanta {
+    background: url(/static/media/fanta.f2c72385.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.olflaska {
+    background: url(/static/media/olflaska.984dbc7c.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.lightningcable {
+    background: url(/static/media/lightningcable.1868039a.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.powerbank {
+    background: url(/static/media/powerbank.ab9a3ad2.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.cigarettepack {
+    background: url(../media/cigarettepack.png) no-repeat;
+    background-size: 45%;
+    background-position: 50%;
+}
+.dagger {
+    background: url(../media/dagger.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.huntinglicense {
+    background: url(../media/huntinglicense.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.crowbar {
+    background: url(../media/crowbar.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.outfit {
+    background: url(https://cdn.discordapp.com/attachments/674359683401777192/703210826948935720/clothes-cartoon-png-6.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.screwdriver {
+    background: url(../media/screwdriver.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.petrolcan {
+    background: url(https://vignette.wikia.nocookie.net/gtawiki/images/2/28/JerryCan-GTAV.png/revision/latest?cb=20150401174331) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.key {
+    background: url(../media/key.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.vehicle_key {
+    background: url(../media/vehicle_key.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenmodBrakes {
+    background: url(/static/media/brokenmodBrakes.2f942a3b.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenmodEngine {
+    background: url(/static/media/brokenmodEngine.318cdcac.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenmodSuspension {
+    background: url(/static/media/brokenmodSuspension.6ef3dee4.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenmodTransmission {
+    background: url(/static/media/brokenmodTransmission.00fda1c1.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenmodTurbo {
+    background: url(/static/media/brokenmodTurbo.aa20bf44.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.brokenpart {
+    background: url(/static/media/brokenpart.321ac1e2.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.modBrakes {
+    background: url(/static/media/brokenmodBrakes.2f942a3b.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.modEngine {
+    background: url(/static/media/brokenmodEngine.318cdcac.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.modSuspension {
+    background: url(/static/media/brokenmodSuspension.6ef3dee4.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.modTransmission {
+    background: url(/static/media/brokenmodTransmission.00fda1c1.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.modTurbo {
+    background: url(/static/media/brokenmodTurbo.aa20bf44.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.part {
+    background: url(/static/media/part.7414a323.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.scrap {
+    background: url(/static/media/scrap.fc233e66.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.driill {
+    background: url(/static/media/borrmaskin.6cd66aea.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.glasses {
+    background: url(../media/glasses.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.earaccessories {
+    background: url(../media/earaccessories.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.helmet {
+    background: url(../media/helmet.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.hat {
+    background: url(../media/hat.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.mask {
+    background: url(../media/mask.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.parachute {
+    background: url(../media/parachute.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.bag {
+    background: url(../media/bag.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.watch {
+    background: url(../media/watch.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.bankcard {
+    background: url(https://cdn.discordapp.com/attachments/451750691317481472/720697821074030694/Bankkort-Mastercard.png) no-repeat;
+    background-size: 95%;
+    background-position: 50%;
+}
+.rccar {
+    background: url(../media/rccar.png) no-repeat;
+    background-size: 95%;
+    background-position: 50%;
+}
+.package {
+    background: url(https://cdn.discordapp.com/attachments/715638084674519172/717016262378651738/QK4B56sK6kNQ1q2z7U0LRdGjO6u27DAgS7R1b8W3Z2Uml5vqYINWM5CPKcdhdBdk7LYLm6JrusEnkirRgIIBnbNawhPrNYG0uwhY.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.tramadol {
+    background: url(../media/tramadol.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.bulletproofvest {
+    background: url(../media/bulletproofvest.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.airpods {
+    background: url(../media/airpods.png) no-repeat;
+    background-size: 90%;
+    background-position: 50%;
+}
+.mp3_player {
+    background: url(../media/mp3_player.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.dvd_player {
+    background: url(../media/dvd_player.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.ipod {
+    background: url(../media/ipod.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.camera {
+    background: url(https://cdn.discordapp.com/attachments/451750691317481472/722610133083095110/Camera.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.testo {
+    background: url(https://cdn.discordapp.com/attachments/451750691317481472/722610052162388018/testo-e.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.disabled-iphone {
+    background: url(https://cdn.discordapp.com/attachments/691006444027379772/700331756720488488/teelfon_193.png) no-repeat;
+    background-size: 30%;
+    background-position: 50%;
+}
+.vpncard {
+    background: url(https://cdn.discordapp.com/attachments/706138791618019358/723547494641958913/vpncard.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.cola {
+    background: url(https://cdn.discordapp.com/attachments/715314019669377054/723687890873352289/png-cola-coca-cola-can-png-image-1200.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.dice {
+    background: url(../media/dice.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.comradio {
+    background: url(../media/comradio.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.bandaid {
+    background: url(../media/bandaid.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.wheelchair {
+    background: url(../media/wheelchair.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.anklemonitor {
+    background: url(https://cdn.discordapp.com/attachments/672763449201131520/725155641408094218/scram-gps-bracelet-front_400_290.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.boltscissor {
+    background: url(https://cdn.discordapp.com/attachments/672763449201131520/725155643568422942/1920.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.blindfold {
+    background: url(https://cdn.discordapp.com/attachments/718596946587287552/725391094657056794/yes131.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.panodil {
+    background: url(../media/paracetamol.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.money {
+    background: url(https://3bp.blogspot.com/-_j3lN14Kcag/WXCg8cSfI6I/AAAAAAAAS6Q/LXYNFeesJAEsGW47qPCeyko8uor0BdfGACLcBGAs/s1600/Sweden%2B20%2BKrona%2Bbanknote%2B2015%2BAstrid%2BLindgren.JPG) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.snspistol {
+    background: url(../media/snspistol.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.snspistol2 {
+    background: url(../media/snspistol2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.snspistol3 {
+    background: url(../media/snspistol3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pepperspray {
+    background: url(../media/pepperspray.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.nokia {
+    background: url(https://www.elgiganten.se/primaryimage/NOK3310BL) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.quest_vpx {
+    background: url(../media/vpx.png) no-repeat;
+    background-size: 110%;
+    background-position: 50%;
+}
+.fish {
+    background: url(
+            https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/59a6349b-7a40-4af2-bf9a-3a13ddf42093/dcj32b8-ed33f0ec-e4c3-4822-a3ff-1f11b35da5c6.png/v1/fill/w_1024,h_576,strp/fish_perch_on_a_transparent_background__by_zoostock_dcj32b8-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNTlhNjM0OWItN2E0MC00YWYyLWJmOWEtM2ExM2RkZjQyMDkzXC9kY2ozMmI4LWVkMzNmMGVjLWU0YzMtNDgyMi1hM2ZmLTFmMTFiMzVkYTVjNi5wbmciLCJoZWlnaHQiOiI8PTU3NiIsIndpZHRoIjoiPD0xMDI0In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd21cLzU5YTYzNDliLTdhNDAtNGFmMi1iZjlhLTNhMTNkZGY0MjA5M1wvem9vc3RvY2stNC5wbmciLCJvcGFjaXR5Ijo5NSwicHJvcG9ydGlvbnMiOjAuNDUsImdyYXZpdHkiOiJjZW50ZXIifX0.8tmjqGAE3PYDwUhIicB1fnJsWd-vkNUbxv_NylVO7xM
+        )
+        no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.chips {
+    background: url(../media/chips.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+.energydrink {
+    background: url(../media/energydrink.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.chocolate {
+    background: url(../media/chocolate.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.gold {
+    background: url(../media/gold.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.iron {
+    background: url(../media/iron.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.copper {
+    background: url(../media/copper.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.stone {
+    background: url(../media/stone.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.bread {
+    background: url(../media/bread.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.chair1 {
+    background: url(../media/chair1.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.redbull {
+    background: url(../media/redbull.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.noccomiami {
+    background: url(../media/noccomiami.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.medic_pack {
+    background: url(../media/medic_pack.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.battleaxe {
+    background: url(../media/battleaxe.png) no-repeat;
+    background-size: 130%;
+    background-position: 50%;
+}
+.alcohol {
+    background: url(../media/acohol.png) no-repeat;
+    background-size: 25%;
+    background-position: 50%;
+}
+.glass_bottle {
+    background: url(../media/glass_bottle.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.cloth {
+    background: url(../media/cloth.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.molotov {
+    background: url(../media/molotov.png) no-repeat;
+    background-size: 90%;
+    background-position: 50%;
+}
+.firework_box {
+    background: url(../media/firework_box.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.gingerbread_jar {
+    background: url(../media/gingerbread_jar.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.ecstasy {
+    background: url(https://deserthopetreatment.com/wp-content/uploads/2019/01/mdma_pills-1.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.vintagepistol {
+    background: url(../media/vintagepistol.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.vintagepistol2 {
+    background: url(../media/vintagepistol2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.vintagepistol3 {
+    background: url(../media/vintagepistol3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.lapalina {
+    background: url(../media/lapalina.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.ipad {
+    background: url(../media/iipad.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.metal_detector {
+    background: url(../media/metal_detector.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.hair_tie {
+    background: url(../media/hair_tie.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.compactrifle {
+    background: url(../media/compactrifle.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.compactrifle2 {
+    background: url(../media/compactrifle2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.compactrifle3 {
+    background: url(../media/compactrifle3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.minismg {
+    background: url(../media/minismg.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.minismg2 {
+    background: url(../media/minismg2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.minismg3 {
+    background: url(../media/minismg3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.doubleaction {
+    background: url(../media/doubleaction.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.doubleaction2 {
+    background: url(../media/doubleaction2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.doubleaction3 {
+    background: url(../media/doubleaction3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.compactlauncher {
+    background: url(https://cdn.discordapp.com/attachments/451750691317481472/818930194600689684/compact-grenade-launcher.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.map {
+    background: url(../media/map.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.rizla {
+    background: url(../media/rizla.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.breathalyzer {
+    background: url(../media/breathalyzer.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.weapon_silencer {
+    background: url(https://static.wikia.nocookie.net/insurgency/images/d/df/Kit_suppressor_12g.png/revision/latest?cb=20141226212317) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.weapon_extended_mag {
+    background: url(https://www.torontoairsoft.com/assets/images/GPM92%20MAGAZINE.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.weapon_grip {
+    background: url(https://www.aceros-de-hispania.com/cuchillos-knives-coleccionismo/navajas-penknives-38117.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.lightweightvest {
+    background: url(../media/lightwightvest.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.plastic {
+    background: url(../media/plastic.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.steel_part {
+    background: url(../media/steel_part.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.kevlar_part {
+    background: url(../media/kevlar_part.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.metal {
+    background: url(../media/metal.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.gunpowder {
+    background: url(../media/gunpowder.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.technical_part {
+    background: url(../media/technical_part.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.bad_lockpick {
+    background: url(../media/bad_lockpick.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.pick_gun {
+    background: url(../media/pick_gun.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.horse_statue {
+    background: url(../media/horse_statue.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.golden_rooster {
+    background: url(../media/golden_rooster.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.flashdrive {
+    background: url(../media/flashdrive.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.antique_coin {
+    background: url(../media/antique_coin.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.antique_vase {
+    background: url(../media/antique_vase.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.zippo_lighter {
+    background: url(../media/zippo_lighter.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.dbshotgun {
+    background: url(../media/dbshotgun.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.dbshotgun2 {
+    background: url(../media/dbshotgun2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.dbshotgun3 {
+    background: url(../media/dbshotgun3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.pegasus_trophy {
+    background: url(../media/pegasus_trophy.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.ipad_ambulance {
+    background: url(../media/iipad.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.kebab {
+    background: url(../media/kebab.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.pizza {
+    background: url(../media/pizza.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.julmust {
+    background: url(../media/julmust.png) no-repeat;
+    background-size: 20%;
+    background-position: 50%;
+}
+.bulletproof_vest {
+    background: url(../media/bulletproof_vest.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.stickybomb {
+    background: url(../media/stickybomb.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.cocacola {
+    background: url(../media/cocacola.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.nitrous_oxide {
+    background: url(../media/nitro.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.bbqfork {
+    background: url(../media/bbqfork.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.nogger {
+    background: url(https://www.gb.se/content/dam/unilever/heart/sweden/pack_shot/7310290002275_nogger_classic-png-1275169-png.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.marabou {
+    background: url(../media/chocolate.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.banana {
+    background: url(../media/banana.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.bible {
+    background: url(../media/bible.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.law_book {
+    background: url(../media/law_book.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.cane {
+    background: url(../media/cane.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.quad_cane {
+    background: url(../media/quad_cane.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+.bong {
+    background: url(../media/bong.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.envelope {
+    background: url(../media/envelope.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.keycard_yellow {
+    background: url(../media/keycar_yellow.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.donut {
+    background: url(../media/donut.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.cocacolazero {
+    background: url(../media/cocacolazero.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.noccolimon {
+    background: url(../media/noccolimon.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.noccomango {
+    background: url(../media/noccomango.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.noccobloodorange {
+    background: url(../media/noccobloodorange.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.spray_can {
+    background: url(../media/spray_can.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.spray_remover {
+    background: url(../media/spray_remover.png) no-repeat;
+    background-size: 30%;
+    background-position: 50%;
+}
+.fake_license_card {
+    background: url(../media/fake_license_card.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.lip_balm {
+    background: url(../media/lip_balm.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.newspaper {
+    background: url(../media/newspaper.png) no-repeat;
+    background-size: 85%;
+    background-position: 50%;
+}
+.regular_watch {
+    background: url(../media/regular_watch.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.smart_watch {
+    background: url(../media/smart_watch.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.fireextinguisher {
+    background: url(../media/fireextingusiher.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.carjack {
+    background: url(../media/carjack.png) no-repeat;
+    background-size: 90%;
+    background-position: 50%;
+}
+.vehicle_trim_chip {
+    background: url(../media/vehicle_trim_chip.png) no-repeat;
+    background-size: 90%;
+    background-position: 50%;
+}
+.crutch {
+    background: url(../media/crutch.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.image_printer {
+    background: url(../media/image_printer.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.image {
+    background: url(../media/imagee.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.bouquet {
+    background: url(../media/Rosbukett.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.teddy_bear {
+    background: url(../media/teddy_bear.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.fackla {
+    background: url(../media/fackla.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.candle {
+    background: url(../media/candle.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.polis_skold {
+    background: url(../media/shield.png) no-repeat;
+    background-size: 80%;
+    background-position: 50%;
+}
+.rose {
+    background: url(../media/rose.png) no-repeat;
+    background-size: 60%;
+    background-position: 50%;
+}
+.champagne_glass {
+    background: url(../media/champagne_glass.png) no-repeat;
+    background-size: 30%;
+    background-position: 50%;
+}
+.beer {
+    background: url(../media/beer.png) no-repeat;
+    background-size: 25%;
+    background-position: 50%;
+}
+.milk {
+    background: url(../media/milk.png) no-repeat;
+    background-size: 25%;
+    background-position: 50%;
+}
+.fish_balls {
+    background: url(../media/fish_balls.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.gold_bar {
+    background: url(../media/gold_bar.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.neon_controller {
+    background: url(../media/neon_controller.png) no-repeat;
+    background-size: 65%;
+    background-position: 50%;
+}
+.evidence_bag {
+    background: url(../media/evidence_bag.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.casing {
+    background: url(../media/casing.png) no-repeat;
+    background-size: 50%;
+    background-position: 50%;
+}
+.blood_sample {
+    background: url(../media/blood_sample.png) no-repeat;
+    background-size: 75%;
+    background-position: 50%;
+}
+.hair {
+    background: url(../media/hair.png) no-repeat;
+    background-size: 35%;
+    background-position: 50%;
+}
+.fingerprint {
+    background: url(../media/fingerprint.png) no-repeat;
+    background-size: 20%;
+    background-position: 50%;
+}
+.racingtablet {
+    background: url(../media/racingtablet.png) no-repeat;
+    background-size: 70%;
+    background-position: 50%;
+}
+
+.pistol_mk2 {
+    background: url(../media/pistol_mk2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.pistol_mk22 {
+    background: url(../media/pistol_mk22.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.pistol_mk23 {
+    background: url(../media/pistol_mk23.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.combatpdw {
+    background: url(../media/combatpdw.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.combatpdw2 {
+    background: url(../media/combatpdw2.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.combatpdw3 {
+    background: url(../media/combatpdw3.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.assaultsmg {
+    background: url(../media/mp401.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultsmg2 {
+    background: url(../media/mp402.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultsmg3 {
+    background: url(../media/mp403.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.machinepistol {
+    background: url(../media/tec91.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.machinepistol2 {
+    background: url(../media/tec92.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.machinepistol3 {
+    background: url(../media/tec93.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.musket {
+    background: url(../media/musket.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.assaultrifle_mk2 {
+    background: url(../media/akmk21.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultriflemk22 {
+    background: url(../media/akmk22.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+.assaultriflemk23 {
+    background: url(../media/akmk23.png) no-repeat;
+    background-size: 90%;
+    background-position: 100%;
+}
+
+.advancedrifle {
+    background: url(../media/advancedrifle.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.handsprit {
+    background: url(../media/handsprit.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+/* Vapen BRONS skisser */
+
+.pistol50_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavypistol_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.snspistol_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintagepistol_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.draco_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_print  {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_print {
+    background: url(../media/skiss1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+/* VAPEN SILVER SKISS */
+
+.pistol50_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavypistol_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.snspistol_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintagepistol_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.draco_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_print2  {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_print2 {
+    background: url(../media/skiss2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN GULD SKISS */
+
+.pistol50_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavypistol_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.snspistol_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintagepistol_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.draco_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_print3  {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_print3 {
+    background: url(../media/skiss3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+/* VAPEN GREPP */
+.draco_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pistol_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.weapon_grip {
+    background: url(../media/grepp1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN SILVER GREPP */
+.draco_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pistol_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_grip2 {
+    background: url(../media/grepp2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN GULD GREPP */
+.draco_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pistol_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_grip3 {
+    background: url(../media/grepp3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN MANTEL */
+.pistol_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_mantle {
+    background: url(../media/mantel1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN SILVER MANTEL */
+.pistol_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_mantle2 {
+    background: url(../media/mantel2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN GULD MANTEL */
+.pistol_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_mantle3 {
+    background: url(../media/mantel3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* Vapen fjäder */
+.draco_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_spring  {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_spring {
+    background: url(../media/fjader1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+
+/* Vapen SILVER fjäder */
+.draco_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_spring2  {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_spring2 {
+    background: url(../media/fjader2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* Vapen guld fjäder */
+.draco_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_spring3  {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_spring3 {
+    background: url(../media/fjader3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+/* VAPEN BRONS PIPOR */
+
+.draco_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_pipe{
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_pipe {
+    background: url(../media/pipa1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+
+/* VAPEN SILVER PIPOR */
+
+.draco_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_pipe2 {
+    background: url(../media/pipa2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN GULD PIPOR */
+
+.draco_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.revolver_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.doubleaction_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.heavy_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistolmk2_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sns_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.vintage_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol50_pipe3 {
+    background: url(../media/pipa3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* Vapen BRONS kroppar */
+
+.draco_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_body {
+    background: url(../media/body1.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN SILVER KROPP */
+
+.draco_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_body2 {
+    background: url(../media/body2.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/* VAPEN GULD KROPP */
+
+.draco_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.tec9_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.mp40_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.m4a1_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak15_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.ak47_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.specialcarbine_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.uzi_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.scorpion_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.combatpdw_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.db_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sawedoff_body3 {
+    background: url(../media/body3.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.drone_lspd {
+    background: url(../media/drone.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sushi {
+    background: url(../media/sushi.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.nudlar {
+    background: url(../media/nudlar.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.kycklingburgare {
+    background: url(../media/kycklingburgare.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.cheeseburgare {
+    background: url(../media/cheeseburger.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.spaghetti {
+    background: url(../media/spaghetti.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pasta {
+    background: url(../media/pasta.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.friteradkyckling {
+    background: url(../media/friteradkyckling.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.kycklingvingar {
+    background: url(../media/kycklingvingar.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.killersmagiskalapp {
+    background: url(/static/media/paper.6f842f89.png) no-repeat;
+    background-size: 40%;
+    background-position: 50%;
+}
+
+.shiv {
+    background: url(../media/shiv.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.katana {
+    background: url(../media/katana.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.sledgehammer {
+    background: url(../media/sledgehammer.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.bfknife {
+    background: url(../media/weapon_bfknife.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.bayonetknife {
+    background: url(../media/weapon_bayonetknife.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.huntsmanknife {
+    background: url(../media/weapon_huntsmanknife.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.karambitknife {
+    background: url(../media/weapon_karambitknife.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.machete {
+    background: url(../media/images_gta-5_weapons_melee_machete.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+.pick_gun {
+    background: url(../media/pick_gun.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.grenade {
+    background: url(../media/grenade.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pipebomb {
+    background: url(../media/pipebomb.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.bzgas {
+    background: url(../media/gasgrenade.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.hk416 {
+    background: url(../media/hk416.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.fnx45 {
+    background: url(../media/fnx45.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+.pistol_mk2pol {
+    background: url(../media/glock.png) no-repeat;
+    background-size: 100%;
+    background-position: 50%;
+}
+
+/*# sourceMappingURL=main.eb216373.chunk.css.map */
