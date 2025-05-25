@@ -1,0 +1,379 @@
+<html>
+
+<head>
+	<meta charset="UTF8">
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+	<div style="overflow: none;" id="overlay" v-if="Show">
+		<v-app style="overflow: none;" class="invoice-app">
+			<v-main style="max-height: 100%;">
+				<div class="invoice-box">
+					<table cellpadding="0" cellspacing="0">
+					    <tr class="top">
+						    <td colspan="4">
+						        <table>
+							        <tr>
+                                        <img src="https://media.discordapp.net/attachments/921430458816938004/1089561555189899284/Distrikt.png" style="margin-top: -6%; width:100%; max-width:110px;">
+                                        
+                                        <div style="margin-left: 75%; margin-top: -15%; margin-bottom: 2.5%;">
+                                            <h3>Avsändare</h3> <br> {{ Character.Name }} <br> {{ Character.Agency }}
+                                        </div>
+
+                                        <div v-if="CompanyInvoice && Payment || CompanyInvoice && Delete" style="margin-left: 75%;">
+                                            <h3>Mottagare</h3> <br> {{ InvoiceChosenCompany }} <br> {{ SentInvoiceReciever }}
+                                        </div>
+
+                                        <!-- <div v-if="!CompanyInvoice && Payment || !CompanyInvoice && Delete" style="margin-left: 75%">
+                                            <h3>Mottagare</h3> <br> {{ SentInvoiceReciever }}
+                                        </div> -->
+                                        
+                                        <div style="margin-bottom: 5%;">
+                                            Faktura-id: {{ Invoice.Identification }} <br>  Fakturans datum: {{ Invoice.CreatedDate }} <br> Förfallodag: {{ Invoice.ToBePayedDate }}
+                                         </div>
+							        </tr>
+						        </table>
+						    </td>
+                        </tr>
+
+                        <br>
+
+					    <tr class="heading">
+						    <td>Artikel</td>
+						    <td>Kostnad</td>
+						    <td>Antal</td>
+                            <td>Summa</td>
+                            <td></td>
+					    </tr>
+				  
+					    <tr class="item" v-for="(item, index) in Items">
+						    <td><input :disabled="Payment || Forced" v-model="item.description" /></td>
+						    <td><input :disabled="Payment || Forced" type="number" v-model="item.price" /></td>
+						    <td><input :disabled="Payment || Forced" type="number" v-model="item.quantity" /></td>
+                            <td>{{ item.price * item.quantity | currency }}</td>
+                            <td><v-icon v-if="!Forced && !Payment && !Delete" @click="deleteRow(index)" color="error">mdi-delete</v-icon></td>
+					    </tr>
+				  
+					    <tr>
+						    <td colspan="4">
+						        <v-btn v-if="!Forced && !Payment && !Delete" :disabled="Items.length == 7 && Character.Reciever.length != 15" @click="addRow" class="mx-2" fab small color="grey lighten-1">
+							        <v-icon>mdi-plus</v-icon>
+						        </v-btn>
+						    </td>
+					    </tr>
+				  
+					    <tr class="total">
+						    <td colspan="3"></td>
+						    <td>Totalsumma: {{ total | currency }}kr</td>
+					    </tr>
+                    </table>
+
+                    <v-spacer></v-spacer>
+
+                    
+                    <div v-if="!Payment && !Delete" class="recieverInput">
+                        <v-text-field style="width: 45%; margin-top: 6%;"
+                        v-if="!CompanyInvoice"
+                        absolute
+                        v-model="Character.Reciever"
+                        :rules="Rules"
+                        counter
+                        :disabled="Forced"
+                        maxlength="15"
+                        minlength="15"
+                        label="Personnummer"
+                        placeholder="xxxx-xx-xx-xxxx"
+                        ></v-text-field>
+                        
+                        
+                        <v-autocomplete style="width: 50%; margin-top: 7%;" v-if="CompanyInvoice"
+                            v-model="InvoiceChosenCompany"
+                            :items="AvailableCompanies"
+                            :search-input.sync="Search"
+                            cache-items
+                            flat
+                            :disabled="Forced"
+                            hide-no-data
+                            hide-details
+                            label="Vilket företag?"
+                            solo-inverted
+                        ></v-autocomplete>
+
+                        <v-text-field style="width: 50%; margin-top: 3%;" v-if="!Forced && CompanyInvoice" absolute v-model="Character.Reciever" :rules="Rules" counter maxlength="15" minlength="15" label="Referensperson" placeholder="xxxx-xx-xx-xxxx (Kan lämnas tom)"></v-text-field>
+
+                        <v-switch :disabled="Forced" style="margin-left: 60%; margin-top: -9%;" v-model="CompanyInvoice" :label="`Företagsfaktura`"></v-switch>
+
+                    </div>
+                    <br></br>
+                    <v-layout justify-center>
+                        <v-img height="200" max-width="350" v-if='Image && Image != "" && Payment || Image != "" && Forced || Image != "" && Delete' :src="Image">
+                    </v-layout>
+                    <v-btn v-if="Payment" :loading="isSaving" @click="PayInvoice()" color="success" align-center style="margin-top: 7%; margin-left: 41%;">Betala</v-btn>
+                    <v-btn v-if="!Payment && !Delete" :loading="isSaving" @click="CreateInvoice()" color="success" align-center style="margin-top: 7%; margin-left: 41%;":disabled="isDisabled()">Skicka</v-btn>
+                    <v-btn v-if="!Forced && Delete && !Payment" :loading="isSaving" @click="DeleteInvoice()" color="error" align-center style="margin-top: 7%; margin-left: 41%;">Annulera</v-btn>
+                </div>
+			</v-main>
+		</v-app>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<script>
+        const Application = new Vue({
+            el: "#overlay",
+            vuetify: new Vuetify(),
+            data: {
+                Show: false,
+                isSaving: false,
+                Forced: false, 
+                Rules: [v => v.length <= 15 || 'Personnummer består utav 15 symboler'],
+                Items: [],
+                Payment: false,
+                Delete: false,
+                Image: "",
+
+                Invoice: {
+                    ToBePayedDate: "2020-01-01",
+                    CreatedDate: "2020-01-01",
+                    Identification: "512321"
+                },
+
+
+                CompanyInvoice: false,
+                InvoiceChosenCompany: "",
+                AvailableCompanies: [
+                    "Bilhandeln benefactor",
+                    "Mekanikern"
+                ],
+                Search: "",
+
+
+                Character: {
+                    Name: "Johanna Karlsson",
+                    CharacterId: "1990-01-01-6550",
+                    Agency: "Bilhandlen Benefactor",
+                    Reciever: ""
+                },
+            },
+
+            computed: {
+                total() {
+                return this.Items.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                );
+                }
+            },
+
+            methods: {
+                addRow() {
+                    this.Items.push({ description: "", quantity: 1, price: 0 });
+                },
+
+                deleteRow(index) {
+                    this.Items.splice(index, 1)
+                },
+
+                totalValue() {
+                return this.Items.reduce(
+                    (acc, item) => acc + item.price * item.quantity,
+                    0
+                );
+                },
+
+                closeNUI: function() {
+                    emitClientEvent("x-invoice:closeNUI")
+                    this.Items = [],
+                    this.Show = false 
+                },
+
+                isDisabled: function() {
+                    if (this.Items.length < 1) {
+                        return true; 
+                    }
+
+                    if (this.CompanyInvoice && this.InvoiceChosenCompany.length < 1) {
+                        return true;
+                    } else if (this.Character.Reciever.length < 15 && !this.CompanyInvoice) {
+                        return true;
+                    }
+
+                    return false;
+                },
+
+                CreateInvoice: function() {
+                    data = {
+                        characterId: this.Character.Reciever,
+                        company: this.InvoiceChosenCompany,
+                        job: this.CompanyInvoice,
+                        id: this.Invoice.Identification,
+                        createdDate: this.Invoice.CreatedDate,
+                        payDate: this.Invoice.ToBePayedDate,
+                        agency: this.Character.Agency,
+                        name: this.Character.Name,
+                        articles: this.Items,
+                        total: this.total,
+                        image: this.Image
+                    },
+
+                    this.isSaving = true 
+					setTimeout(() => {
+                        emitClientEvent("x-invoice:createInvoice", data)
+                        this.isSaving = false;
+                        this.Forced = false; 
+                        this.Image = "";
+                        this.closeNUI();
+                    }, 2500);
+
+                },
+
+                DeleteInvoice: function() {
+                    data ={
+                        total: this.total,
+                        id: this.Invoice.Identification,
+                        job: this.CompanyInvoice,
+                        company: this.InvoiceChosenCompany,
+                        agency: this.Character.Agency,
+                        sender: this.Character.CharacterId,  
+                    },
+                    
+                    this.isSaving = true 
+                    setTimeout(() => {
+                        emitClientEvent("x-invoice:deleteInvoice", data)
+                        this.isSaving = false;
+                        this.closeNUI();
+                    }, 2500);
+                },
+
+                PayInvoice: function() {
+                    data = {
+                        total: this.total,
+                        id: this.Invoice.Identification,
+                        job: this.CompanyInvoice,
+                        company: this.InvoiceChosenCompany,
+                        agency: this.Character.Agency,
+                        sender: this.Character.CharacterId,
+                    },
+
+
+                    this.isSaving = true 
+                    setTimeout(() => {
+                        emitClientEvent("x-invoice:payInvoice", data)
+                        this.isSaving = false;
+                        this.closeNUI();
+                    }, 2500);
+
+                }
+            },
+
+            watch: {
+                CompanyInvoice() {
+                    if (!this.CompanyInvoice) {
+                        this.InvoiceChosenCompany = ""
+                    } else {
+                        this.Character.Reciever = ""
+                    }
+                },
+            },
+
+            filters: {
+                currency(value) {
+                    return value.toFixed(2);
+                }
+            }
+        })
+
+        emitClientEvent = (event, data) => {
+            const options = {
+                method: "POST",
+                body: JSON.stringify({ event, data })
+            };
+
+            //console.log(`Sending event to client: ${event} with data: ${JSON.stringify(data)}`)
+
+            fetch("http://nuipipe/nui_client_response", options);
+        }
+
+        handleKeyUp = (e) => {
+            if (e.keyCode === 27) {
+                Application.closeNUI();
+            }
+        }
+
+        addEventListener("message", function (passed) {
+            let action = passed.data.Action;
+
+            let data = passed.data.Data;
+
+            switch (action) {
+                case "OPEN_INVOICE_NUI":
+                    Application.Invoice.ToBePayedDate = data.payDate;
+                    Application.Invoice.CreatedDate = data.createDate;
+                    Application.Invoice.Identification = data.identificationId;
+                    Application.Character = data.Character;
+                    Application.AvailableCompanies = data.Jobs;
+                    Application.Show = true;
+                    Application.Delete = false;
+                    Application.Payment = false;
+                    break;
+                case "OPEN_PAYMENT_INVOICE": 
+                    Application.Show = true;
+                    Application.Payment = true;
+                    Application.Character.Name = data.invoiceData.name;
+                    Application.Character.CharacterId = data.sender;
+                    Application.Character.Agency = data.invoiceData.agency;
+                    Application.Invoice.ToBePayedDate = data.invoiceData.payDate;
+                    Application.Invoice.CreatedDate = data.invoiceData.createdDate;
+                    Application.CompanyInvoice = data.invoiceData.job;
+                    Application.InvoiceChosenCompany = data.invoiceData.company;
+                    Application.Invoice.Identification = data.id;
+                    Application.Delete = false;
+                    Application.SentInvoiceReciever = data.invoiceData.characterId;
+                    Application.Items = data.Items;
+                    Application.Image = data.invoiceData.image;
+                    break;
+                case "OPEN_DELETE_INVOICE": 
+                    Application.Show = true;
+                    Application.Delete = true;
+                    Application.Character.Name = data.invoiceData.name;
+                    Application.Character.CharacterId = data.sender;
+                    Application.Character.Agency = data.invoiceData.agency;
+                    Application.Invoice.ToBePayedDate = data.invoiceData.payDate;
+                    Application.Invoice.CreatedDate = data.invoiceData.createdDate;
+                    Application.CompanyInvoice = data.invoiceData.job;
+                    Application.InvoiceChosenCompany = data.invoiceData.company;
+                    Application.Invoice.Identification = data.id;
+                    Application.SentInvoiceReciever = data.invoiceData.characterId;
+                    Application.Payment = false;
+                    Application.Items = data.Items;
+                    Application.Image = data.invoiceData.image;
+                    break;
+                case "OPEN_FORCED_INVOICE": 
+                    Application.Invoice.ToBePayedDate = data.payDate;
+                    Application.Invoice.CreatedDate = data.createDate;
+                    Application.Invoice.Identification = data.identificationId;
+                    Application.Character = data.Character;
+                    Application.AvailableCompanies = data.Jobs;
+                    Application.Forced = true;
+                    Application.Image = data.Image;
+                    Application.Items = data.Articles;
+                    Application.Show = true;
+                    Application.Delete = false;
+                    Application.Payment = false;
+                    break;
+                default:
+                    // console.log("Could not read message with action: " + data["action"])
+                    break
+            }
+        })
+
+        addEventListener("keyup", this.handleKeyUp);
+	</script>
+</body>
+
+</html>

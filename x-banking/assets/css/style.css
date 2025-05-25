@@ -1,0 +1,51 @@
+body,
+html {
+    /* background: url(https://i.imgur.com/mNjcSvH.jpg) no-repeat;
+    background-size: 100%; */
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#banking-app {
+    position: fixed;
+    top: 10%;
+    margin-left: calc(50% - 20%);
+    width: 40%;
+    max-width: 40%;
+    height: 0%;
+}
+
+#homepage-container {
+    /* background-color: white; */
+}
+
+#accounts-container {
+    /* background-color: white; */
+}
+
+.redColor {
+    color: red;
+}
+
+.greenColor {
+    color: rgb(34, 104, 34);
+}
+
+::-webkit-scrollbar
+{
+    width: 0px;
+}
+
+::-webkit-scrollbar-track-piece
+{
+    background-color: transparent;
+    -webkit-border-radius: 6px;
+}
+
+td {
+    color: lightgray;
+}

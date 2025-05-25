@@ -1,0 +1,174 @@
+<html>
+
+<head>
+	<meta charset="UTF8">
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+	<div style="overflow: none;" id="overlay" v-if="show">
+		<v-app style="overflow: none;" class="character-creation">
+			<v-main>
+				<v-toolbar dense>
+					<v-toolbar-title>Karaktärsskapning</v-toolbar-title>
+				</v-toolbar>
+				<v-card height="1000">
+					<v-card-text>
+						<v-row>
+							<v-col cols="12" sm="6" md="6">
+								<v-text-field label="Förnamn" v-model="character.firstname" required></v-text-field>
+							</v-col>
+							<v-col cols="12" sm="6" md="6">
+								<v-text-field label="Efternamn" v-model="character.lastname" required>
+								</v-text-field>
+							</v-col>
+							<v-col cols="12">
+								<v-text-field label="Födelsedatum" hint="(XXXX-XX-XX)" v-model="character.dateofbirth"
+									required>
+								</v-text-field>
+							</v-col>
+							<v-col cols="12">
+								<v-subheader class="pl-0">Längd</v-subheader>
+								<v-slider color="success" v-model="character.length" min="150" max="210"
+									thumb-color="success" thumb-size="30" thumb-label="always">
+								</v-slider>
+							</v-col>
+							<v-col cols="12" sm="6" offset-md="3">
+								<v-autocomplete :items="['Man', 'Kvinna']" v-model="character.gender" label="Kön">
+								</v-autocomplete>
+							</v-col>
+						</v-row>
+					</v-card-text>
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn color="error" outlined text @click="cancelCreation">AVBRYT</v-btn>
+						<v-btn color="success" outlined text :disabled="validateCid" @click="createCharacter">SKAPA
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+
+			</v-main>
+		</v-app>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+	<script>
+		const Application = new Vue({
+			el: '#overlay',
+			vuetify: new Vuetify(),
+			data: {
+				show: false,
+
+				character: {
+					firstname: "",
+					lastname: "",
+					dateofbirth: "",
+					lastdigits: "0000",
+					length: 189,
+					gender: ""
+				}
+			},
+			created: function () {
+				this.$vuetify.theme.dark = true
+			},
+			methods: {
+				createCharacter: function () {
+					emitClientEvent("x-character:characterCreation", this.character)
+
+					this.closeNUI();
+				},
+				cancelCreation: function () {
+					emitClientEvent("x-character:refreshSelection");
+
+					this.closeNUI();
+				},
+				closeNUI: function () {
+					this.show = false;
+
+					emitClientEvent("x-character:closeNUI");
+				}
+			},
+			computed: {
+				validateCid: function () {
+					let firstname = this.character.firstname;
+
+					if (firstname.length < 2) {
+						return true;
+					} else {
+						let firstLetter = firstname[0];
+
+						if (firstLetter !== firstLetter.toUpperCase()) {
+							return true;
+						}
+					}
+
+					let lastname = this.character.lastname;
+
+					if (lastname.length < 2) {
+						return true;
+					} else {
+						let firstLetter = lastname[0];
+
+						if (firstLetter !== firstLetter.toUpperCase()) {
+							return true;
+						}
+					}
+
+					let cid = this.character.dateofbirth;
+
+					if (cid.length > 10) {
+						return true;
+					} else if (cid.length < 10) {
+						return true;
+					}
+
+					if (cid[4] !== '-') {
+						return true;
+					} else if (cid[7] !== '-') {
+						return true;
+					}
+
+					let gender = this.character.gender
+
+					if (gender === "") {
+						return true;
+					}
+
+					return false;
+				}
+			}
+		})
+
+		emitClientEvent = (event, data) => {
+			const options = {
+				method: 'POST',
+				body: JSON.stringify({ event, data })
+			};
+
+			console.log(`Sending event to client: ${event} with data: ${JSON.stringify(data)}`)
+
+			fetch('http://nuipipe/nui_client_response', options)
+		}
+
+		addEventListener("message", function (passed) {
+			var data = passed.data
+
+			switch (data["action"]) {
+				case "OPEN_CHARACTER_CREATION_NUI":
+					Application.show = true
+
+					break;
+				default:
+					// console.log("Could not read message with action: " + data["action"])
+					break
+			}
+		})
+	</script>
+</body>
+
+</html>

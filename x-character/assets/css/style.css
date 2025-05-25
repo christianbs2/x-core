@@ -1,0 +1,26 @@
+body,
+html {
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#overlay {
+    overflow: hidden;
+}
+
+.character-creation {
+    position: fixed;
+    top: 10%;
+    margin-left: calc(50% - 25%);
+    width: 50%;
+    max-width: 50%;
+    height: 50%;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

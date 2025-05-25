@@ -1,0 +1,413 @@
+<html>
+    <head>
+        <meta charset="UTF8" />
+        <link href="./css/style.css" rel="stylesheet" type="text/css" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+            integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+            crossorigin="anonymous"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+
+    <body>
+        <div style="overflow: none" id="overlay" v-if="Show">
+            <v-app style="overflow: none" id="banking-app">
+                <v-main style="max-height: 100%">
+                    <v-toolbar height="55%" dark prominent>
+                        <v-toolbar-title
+                            >Bank - {{ Character.firstname }} {{
+                            Character.lastname }}</v-toolbar-title
+                        >
+
+                        <v-spacer></v-spacer>
+
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                                <v-btn v-on:click="closeNUI" icon>
+                                    <v-icon v-on="on">mdi-export</v-icon>
+                                </v-btn>
+                            </template>
+
+                            <span>Stäng</span>
+                        </v-tooltip>
+                    </v-toolbar>
+
+                    <div id="accounts-container" v-if="ActiveNavigation === 0">
+                        <v-card tile>
+                            <v-container>
+                                <v-row no-gutters>
+                                    <v-col cols="12" sm="4">
+                                        <v-card elevation="24" outline shaped>
+                                            <v-card-title primary-title>
+                                                Konton
+
+                                                <v-spacer></v-spacer>
+
+                                                <v-btn
+                                                    icon
+                                                    color="success"
+                                                    @click="openCreateAccount"
+                                                >
+                                                    <v-icon>mdi-plus</v-icon>
+                                                </v-btn>
+                                            </v-card-title>
+
+                                            <v-list two-line>
+                                                <v-list-item-group
+                                                    v-model="selected"
+                                                    active-class="green--text"
+                                                >
+                                                    <template
+                                                        v-for="(item, index) in Account.Accounts"
+                                                    >
+                                                        <v-list-item
+                                                            :key="item.AccountLabel"
+                                                        >
+                                                            <template
+                                                                v-slot:default="{ active }"
+                                                            >
+                                                                <v-list-item-content>
+                                                                    <v-list-item-title
+                                                                        v-text="item.AccountLabel"
+                                                                    ></v-list-item-title>
+
+                                                                    <v-list-item-subtitle
+                                                                        class="
+                                                                            text--primary
+                                                                        "
+                                                                        v-text="item.AccountNumber"
+                                                                    ></v-list-item-subtitle>
+
+                                                                    <v-list-item-subtitle
+                                                                        v-text="item.AccountBalance + ' kr'"
+                                                                    ></v-list-item-subtitle>
+                                                                </v-list-item-content>
+                                                            </template>
+                                                        </v-list-item>
+
+                                                        <v-divider
+                                                            v-if="index < Account.Accounts.length - 1"
+                                                            :key="index"
+                                                        ></v-divider>
+                                                    </template>
+                                                </v-list-item-group>
+                                            </v-list>
+                                        </v-card>
+                                    </v-col>
+
+                                    <v-spacer></v-spacer>
+
+                                    <v-col cols="12" offset-sm="1" sm="7">
+                                        <v-card elevation="24" outline shaped>
+                                            <v-card-title primary-title>
+                                                {{
+                                                Account.Accounts[selected].AccountLabel
+                                                }}
+
+                                                <v-tooltip bottom>
+                                                    <template
+                                                        v-slot:activator="{ on }"
+                                                    >
+                                                        <v-btn
+                                                            icon
+                                                            color="warning"
+                                                            @click="renameAccount(selected)"
+                                                            :disabled="!isOwnerOfAccount(selected) || isAccountPersonal(selected)"
+                                                        >
+                                                            <v-icon
+                                                                >mdi-pencil</v-icon
+                                                            >
+                                                        </v-btn>
+                                                    </template>
+
+                                                    <span>Redigera</span>
+                                                </v-tooltip>
+
+                                                <v-spacer></v-spacer>
+
+                                                <v-tooltip bottom>
+                                                    <template
+                                                        v-slot:activator="{ on }"
+                                                    >
+                                                        <v-btn
+                                                            icon
+                                                            color="success"
+                                                            @click="openAccountTransactions(selected)"
+                                                        >
+                                                            <v-icon
+                                                                >mdi-receipt</v-icon
+                                                            >
+                                                        </v-btn>
+                                                    </template>
+
+                                                    <span>Transaktioner</span>
+                                                </v-tooltip>
+                                            </v-card-title>
+
+                                            <v-divider></v-divider>
+
+                                            <v-card-text>
+                                                Välkommen, {{
+                                                Character.firstname }} {{
+                                                Character.lastname }}!
+                                                <br /><br />Det finns totalt
+                                                <span style="font-weight: bold"
+                                                    >{{
+                                                    Account.Accounts[selected].AccountBalance
+                                                    }}</span
+                                                >
+                                                kr på detta konto.
+                                            </v-card-text>
+
+                                            <v-card-actions>
+                                                <div
+                                                    v-if="Account.Accounts[selected]"
+                                                >
+                                                    <v-btn
+                                                        @click="openActionAccount(selected, false)"
+                                                        raised
+                                                        color="success"
+                                                        >SÄTT IN</v-btn
+                                                    >
+                                                    <v-btn
+                                                        @click="openActionAccount(selected, true)"
+                                                        raised
+                                                        color="orange"
+                                                        >TA UT</v-btn
+                                                    >
+
+                                                    <v-btn
+                                                        @click="openAccountMembers(selected)"
+                                                        v-if="isOwnerOfAccount(selected)"
+                                                        raised
+                                                        color="#191970"
+                                                    >
+                                                        MEDLEMMAR</v-btn
+                                                    >
+                                                    <v-btn
+                                                        @click="openConfirmLeave(selected)"
+                                                        v-if="Account.Accounts[selected].AccountName !== 'PERSONAL_' + Character.dateofbirth + '-' + Character.lastdigits"
+                                                        raised
+                                                        color="error"
+                                                    >
+                                                        LÄMNA</v-btn
+                                                    >
+                                                </div>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-card>
+                    </div>
+                    <div
+                        id="transactions-container"
+                        v-else-if="ActiveNavigation === 1"
+                    >
+                        <v-card tile>
+                            <v-card-title>
+                                Transaktioner
+                                <v-spacer></v-spacer>
+                                <v-autocomplete
+                                    v-model="SearchTransaction"
+                                    :items="Account.Accounts"
+                                    dense
+                                    label="Konto"
+                                >
+                                    <template v-slot:selection="data">
+                                        {{ data.item.AccountLabel }} - {{
+                                        data.item.AccountNumber }}
+                                    </template>
+                                    <template v-slot:item="data">
+                                        <v-list-item-content>
+                                            <v-list-item-title
+                                                v-html="data.item.AccountLabel"
+                                            ></v-list-item-title>
+                                            <v-list-item-subtitle
+                                                v-html="data.item.AccountNumber"
+                                            ></v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </template>
+                                </v-autocomplete>
+                            </v-card-title>
+                            <v-data-table
+                                :footer-props="{
+								showFirstLastPage: true,
+								itemsPerPageText: 'Transaktioner per sida',
+								itemsPerPageOptions: [10]
+							}"
+                                no-results-text="Inga resultat hittades..."
+                                no-data-text="Inga transaktioner är gjorda..."
+                                :headers="TransactionsHeaders"
+                                :items="getTransactions()"
+                            >
+                                <template v-slot:item="Transaction">
+                                    <tr>
+                                        <td>
+                                            {{ Transaction.item.Description }}
+                                        </td>
+                                        <td
+                                            v-bind:class="{ redColor: Transaction.item.Type === 'removed', greenColor: Transaction.item.Type === 'added' }"
+                                        >
+                                            {{ (Transaction.item.Type ===
+                                            "removed" ?
+                                            `-${Transaction.item.Amount}` :
+                                            `+${Transaction.item.Amount}`) }}
+                                        </td>
+                                        <td>{{ Transaction.item.Date }}</td>
+                                    </tr>
+                                </template>
+                            </v-data-table>
+                        </v-card>
+                    </div>
+
+                    <v-dialog v-model="Dialog.Show" max-width="400">
+                        <v-card>
+                            <v-card-title class="headline"
+                                >{{ Dialog.Header }}</v-card-title
+                            >
+
+                            <v-card-text>
+                                {{ Dialog.Input.Show ? "" : Dialog.Text }}
+
+                                <v-text-field
+                                    v-if="Dialog.Input.Show"
+                                    :label="Dialog.Input.Label"
+                                    v-model="Dialog.Input.Value"
+                                    :hint="Dialog.Input.Hint"
+                                >
+                                </v-text-field>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+
+                                <v-btn
+                                    outlined
+                                    :color="Dialog.CancelButtonColor + ' darken-1'"
+                                    text
+                                    @click="Dialog.ButtonCallback(false)"
+                                >
+                                    {{ Dialog.CancelButton }}
+                                </v-btn>
+
+                                <v-btn
+                                    outlined
+                                    :color="Dialog.ConfirmButtonColor + ' darken-1'"
+                                    text
+                                    @click="Dialog.ButtonCallback(true)"
+                                >
+                                    {{ Dialog.ConfirmButton }}
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-dialog v-model="MembersDialog.Show" max-width="400">
+                        <v-card>
+                            <v-card-title class="headline"
+                                >{{ MembersDialog.Header }}</v-card-title
+                            >
+
+                            <v-card-text>
+                                <v-list subheader two-line>
+                                    <v-list-item
+                                        v-for="member in Account.Accounts[selected].AccountMembers"
+                                        :key="member.CharacterId"
+                                    >
+                                        <v-list-item-avatar>
+                                            <v-icon class="grey lighten-1" dark>
+                                                mdi-account
+                                            </v-icon>
+                                        </v-list-item-avatar>
+
+                                        <v-list-item-content>
+                                            <v-list-item-title
+                                                v-text="member.Name"
+                                            ></v-list-item-title>
+
+                                            <v-list-item-subtitle
+                                                v-text="member.CharacterId"
+                                            ></v-list-item-subtitle>
+                                        </v-list-item-content>
+
+                                        <v-list-item-action>
+                                            <v-btn
+                                                :disabled="(Character.dateofbirth + '-' + Character.lastdigits) == member.CharacterId"
+                                                icon
+                                                @click="kickMember(member)"
+                                            >
+                                                <v-icon color="error lighten-1"
+                                                    >mdi-delete</v-icon
+                                                >
+                                            </v-btn>
+                                        </v-list-item-action>
+                                    </v-list-item>
+                                </v-list>
+                            </v-card-text>
+
+                            <v-card-actions>
+                                <v-layout align-center justify-center>
+                                    <div class="text-xs-center">
+                                        <v-btn
+                                            @click="openInviteToAccount(selected)"
+                                            color="success"
+                                            fab
+                                            small
+                                        >
+                                            <v-icon>mdi-plus</v-icon>
+                                        </v-btn>
+                                    </div>
+                                </v-layout>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-card>
+                        <v-bottom-navigation
+                            v-model="ActiveNavigation"
+                            dark
+                            grow
+                            color="green lighten-3"
+                        >
+                            <v-btn>
+                                <span>Konton</span>
+                                <v-icon>mdi-bank</v-icon>
+                            </v-btn>
+
+                            <v-btn>
+                                <span>Transaktioner</span>
+                                <v-icon>mdi-receipt</v-icon>
+                            </v-btn>
+                        </v-bottom-navigation>
+                    </v-card>
+                </v-main>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+        <script src="./js/banking.js"></script>
+    </body>
+</html>
