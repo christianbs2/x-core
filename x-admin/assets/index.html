@@ -1,0 +1,843 @@
+<html>
+
+<head>
+	<meta charset="UTF8">
+	<link href="./css/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+		integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div style="overflow: none;" id="overlay" v-if="Show">
+		<v-app style="overflow: none;" class="admin-app">
+			<v-main style="max-height: 100%;">
+				<v-toolbar height="55%" dark prominent>
+					<v-toolbar-title>{{ Player.Name }} - Admin
+					</v-toolbar-title>
+
+					<v-tooltip v-if="LastPages.length > 0" bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn v-on:click="openLastPage()" icon>
+								<v-icon v-on="on" color="red">mdi-arrow-left</v-icon>
+							</v-btn>
+						</template>
+
+						<span>Gå tillbaka</span>
+					</v-tooltip>
+
+					<v-spacer></v-spacer>
+
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+							<v-btn v-on:click="closeNUI" icon>
+								<v-icon v-on="on">mdi-export</v-icon>
+							</v-btn>
+						</template>
+
+						<span>Stäng</span>
+					</v-tooltip>
+				</v-toolbar>
+
+				<div id="admin-container">
+					<div v-if="ActiveNavigation === 0">
+						<div id="players-page" v-if="Page == 'PLAYERS_LIST'">
+							<v-card tile>
+								<v-card-title>
+									Spelare ({{ Players.length }}st)
+									<v-spacer></v-spacer>
+									<v-text-field v-model="SearchPlayer" append-icon="mdi-magnify" label="Sök"
+										single-line hide-details></v-text-field>
+								</v-card-title>
+								<v-data-table sort-by="Id" :footer-props="{
+											showFirstLastPage: true,
+											itemsPerPageText: 'Spelare per sida',
+											itemsPerPageOptions: [10, 15]
+										}" no-results-text="Inga resultat hittades..." no-data-text="Inga spelare kunde laddas in..."
+									:headers="PlayerHeaders" :items="Players" :search="SearchPlayer">
+
+									<template v-slot:item="Player">
+										<tr>
+											<td>{{ Player.item.Id }}</td>
+											<td style="color:rgb(151, 54, 54); font-weight: bold;">
+												{{ Player.item.Identifier }}</td>
+											<td>{{ Player.item.Name }}</td>
+											<td>{{ Player.item.Character }}</td>
+											<td>{{ Player.item.Ping }}</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:#ADD8E6;" v-bind="attrs"
+															v-on="on" medium dense @click="openPlayerPage(Player.item)">
+															mdi-launch
+														</v-icon>
+													</template>
+													<span>Hantera - {{ Player.item.Name }}</span>
+												</v-tooltip>
+
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(194, 36, 31, 0.534);" v-bind="attrs"
+															v-on="on" medium dense @click="kickPlayer(Player.item)">
+															mdi-delete
+														</v-icon>
+													</template>
+													<span>Sparka - {{ Player.item.Name }}</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+						<div id="player-page" v-else-if="Page == 'PLAYER'">
+							<v-card tile>
+								<v-container>
+									<v-row dense>
+										<v-col offset-md="2" cols="4">
+											<v-card class="mx-auto" max-width="344" outlined>
+												<v-list-item three-line>
+													<v-list-item-content>
+														<v-list-item-title class="headline text-md-center mb-1">
+															Karaktärer ({{ PageData.Characters.length }}st)
+														</v-list-item-title>
+
+														<template v-for="(character, index) in PageData.Characters"
+															:key="character.characterId">
+															<v-divider v-if="index > 0" :key="index" inset></v-divider>
+
+															<v-list-item
+																@click="openCharacterPage(character.characterId)"
+																:key="character.characterId">
+																<v-list-item-avatar tile size="40">
+																	<v-icon large>
+																		mdi-{{ character.gender == 'F' ? 'human-female'
+																		:
+																		'human-male'
+																		}}
+																	</v-icon>
+																</v-list-item-avatar>
+
+																<v-list-item-content>
+																	<v-list-item-title>{{ character.firstname }} {{
+																		character.lastname }}</v-list-item-title>
+
+																	<v-list-item-subtitle>
+																		{{ character.characterId }} ({{
+																		new Date().getFullYear() -
+																		parseInt((character.characterId).substr(0)) }}
+																		år)
+																	</v-list-item-subtitle>
+																</v-list-item-content>
+															</v-list-item>
+														</template>
+														<template v-for="index in (3 - PageData.Characters.length)"
+															:key="index + 10">
+															<v-divider v-if="index <= 3" :key="index + 10" inset>
+															</v-divider>
+
+															<v-list-item @click="" :key="index">
+																<v-list-item-avatar tile size="40">
+																	<v-icon large>
+																		mdi-human-male
+																	</v-icon>
+																</v-list-item-avatar>
+
+																<v-list-item-content>
+																	<v-list-item-title>Tom Plats</v-list-item-title>
+
+																	<v-list-item-subtitle>
+																		0000-00-00-0000 (0 år)
+																	</v-list-item-subtitle>
+																</v-list-item-content>
+															</v-list-item>
+														</template>
+													</v-list-item-content>
+												</v-list-item>
+											</v-card>
+										</v-col>
+
+										<v-col cols="4">
+											<v-card class="mx-auto" max-width="344" outlined>
+												<v-list-item three-line>
+													<v-list-item-content>
+														<v-list-item-title class="headline text-md-center mb-1">
+															{{ PageData.Name }}</v-list-item-title>
+
+														<template v-for="(status, index) in PageData.Status"
+															:key="status.Label">
+															<v-divider v-if="index > 0" :key="index" inset></v-divider>
+
+															<v-list-item @click="clickOnStatus(status, index)"
+																:key="status.Label">
+																<v-list-item-avatar tile size="40">
+																	<v-icon large>
+																		{{ status.Icon }}
+																	</v-icon>
+																</v-list-item-avatar>
+
+																<v-list-item-content>
+																	<v-list-item-title>
+																		{{ status.Label }}
+																	</v-list-item-title>
+
+																	<v-list-item-subtitle>
+																		{{ (status.Hidden ? "GÖMD" : status.Value) }}
+																	</v-list-item-subtitle>
+																</v-list-item-content>
+															</v-list-item>
+														</template>
+													</v-list-item-content>
+												</v-list-item>
+											</v-card>
+										</v-col>
+									</v-row>
+								</v-container>
+							</v-card>
+						</div>
+						<div id="character-page" v-else-if="Page == 'CHARACTER'">
+							<div id="character-page-information" v-if="Navigation.Current == 0">
+								<v-card>
+									<v-container>
+										<v-row>
+											<v-col cols="12" sm="6" md="6">
+												<v-text-field disabled label="Förrnamn"
+													v-model="PageData.Character.firstname" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="6" md="6">
+												<v-text-field disabled label="Efternamn"
+													v-model="PageData.Character.lastname" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="6" md="6">
+												<v-text-field disabled label="Personnummer"
+													v-model="PageData.Character.characterId" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="6" md="6">
+												<v-text-field disabled label="Längd" v-model="PageData.Character.length"
+													required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="3" md="3">
+												<v-text-field type="number" label="Kontanter"
+													v-model="PageData.Character.cash" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="3" md="3">
+												<v-text-field type="number" label="Bank"
+													v-model="PageData.Character.bank" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="3" md="3">
+												<v-text-field disabled label="Blodgrupp"
+													v-model="PageData.Character.bloodType" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="3" md="3">
+												<v-text-field label="Speltid" disabled
+													:value="convertTime(PageData.Character.timePlayed)" required>
+												</v-text-field>
+											</v-col>
+											<v-col cols="12" sm="6" md="6">
+												<v-autocomplete :items="PageData.Jobs" v-model="PageData.Character.job"
+													label="Jobb">
+												</v-autocomplete>
+											</v-col>
+											<v-col cols="12" sm="6" md="6">
+												<v-autocomplete :items="PageData.JobGrades[PageData.Character.job]"
+													v-model="PageData.Character.jobGrade" label="Rang">
+												</v-autocomplete>
+											</v-col>
+										</v-row>
+
+										<v-layout align-center justify-center>
+											<div class="text-xs-center">
+												<v-btn width="250" :loading="Button.Loading" :disabled="Button.Loading"
+													color="success" @click="saveCharacter()" color="success">SPARA
+												</v-btn>
+											</div>
+										</v-layout>
+									</v-container>
+								</v-card>
+							</div>
+							<div id="character-page-vehicles" v-else-if="Navigation.Current == 1">
+								<v-card>
+									<v-card-title>
+										Fordon ({{ PageData.Character.vehicles.length }}st)
+										<v-spacer></v-spacer>
+									</v-card-title>
+									<v-data-table sort-by="Garage" :footer-props="{
+												showFirstLastPage: true,
+												itemsPerPageText: 'Fordon per sida',
+												itemsPerPageOptions: [10, 15]
+											}" no-data-text="Karaktären äger inga fordon..." :headers="[
+											{
+												text: 'Registreringsplåt',
+												align: 'start',
+												value: 'vehiclePlate'
+											},
+											{
+												text: 'Fordonsmodell',
+												value: 'Model'
+											},
+											{
+												text: 'Garage (Tryck förr att ändra)',
+												value: 'Garage'
+											},
+											{
+												text: 'Impound',
+												value: 'Inside'
+											}
+										]" :items="PageData.Character.vehicles">
+
+										<template v-slot:item="Vehicle">
+											<tr>
+												<td>{{ Vehicle.item.vehiclePlate }}</td>
+												<td>{{ JSON.parse(Vehicle.item.vehicleData).label }}</td>
+												<td style="color:#3c7a4fbb">
+													<v-edit-dialog :return-value.sync="Vehicle.item.vehicleGarage"
+														@save="editGarage(Vehicle.item)">
+														{{ Vehicle.item.vehicleGarage }}
+														<template v-slot:input>
+															<v-autocomplete
+																:items="['MOTEL_GARAGE', 'BEACH_GARAGE', 'TRANSPORT_GARAGE', 'WEST_GARAGE', 'BILFIRMAN', 'SANDY_GARAGE', 'SANDY_GARAGE', 'PALETO_GARAGE', 'TORGET_TORGET', 'MECHANIC_GARAGE', 'PRIVAT_GARAGE', 'MECHANIC_PERSONAL_GARAGE', 'GYM_GARAGE', 'AMBULANCE_GARAGE', 'IMPOUND_GARAGE', 'REDLINE_GARAGE', 'HUNTING_GARAGE', 'POLICE_GARAGE', 'POLICE_STOLEN_GARAGE', 'HOUSE_GARAGE', 'MIRRORPARK_GARAGES', 'APARTMENT_GARAGES', 'PENTHOUSE_GARAGES', 'BEACH_APARTMENT_GARAGES', 'BAHAMAS_GARAGE']"
+																v-model="Vehicle.item.vehicleGarage" label="Garage">
+															</v-autocomplete>
+														</template>
+													</v-edit-dialog>
+												</td>
+												<td>
+													<v-container>
+														<v-checkbox @change="editInside(Vehicle.item)"
+															v-model="Vehicle.item.vehicleInside" color="success"
+															hide-details>
+														</v-checkbox>
+													</v-container>
+												</td>
+											</tr>
+										</template>
+									</v-data-table>
+								</v-card>
+							</div>
+							<div id="character-page-properties" v-else-if="Navigation.Current == 2">
+								<v-card>
+									<v-card-title>
+										Fastigheter ({{ PageData.Character.properties.length }}st)
+										<v-spacer></v-spacer>
+									</v-card-title>
+									<v-data-table sort-by="Type" :footer-props="{
+												showFirstLastPage: true,
+												itemsPerPageText: 'Fastigheter per sida',
+												itemsPerPageOptions: [10, 15]
+											}" no-data-text="Inga fastigheter kunde hittas..." :headers="[
+											{
+												text: 'UUID',
+												align: 'start',
+												value: 'UUID'
+											},
+											{
+												text: 'Fastighetsnummer',
+												value: 'Number'
+											},
+											{
+												text: 'Fastighetstyp',
+												value: 'Type'
+											},
+											{
+												text: 'Alternativ',
+												value: 'Actions'
+											}
+										]" :items="PageData.Character.properties">
+
+										<template v-slot:item="Property">
+											<tr>
+												<td style="color:rgba(255, 0, 0, 0.664); font-weight: bold;">
+													{{ Property.item.UUID }}</td>
+												<td>{{ Property.item.Index }}</td>
+												<td>{{ Property.item.Type }}</td>
+
+												<td>
+													<v-tooltip bottom>
+														<template v-slot:activator="{ on, attrs }">
+															<v-icon style="color:rgba(56, 79, 211, 0.534);"
+																v-bind="attrs" v-on="on" medium dense
+																@click="getWaypoint(Property.item)">
+																mdi-crosshairs-gps
+															</v-icon>
+														</template>
+														<span>GPS</span>
+													</v-tooltip>
+												</td>
+											</tr>
+										</template>
+									</v-data-table>
+								</v-card>
+							</div>
+							<div id="character-page-skills" v-else-if="Navigation.Current == 3">
+								<v-card>
+									<v-container>
+										<br>
+										<v-row>
+											<v-col v-for="skill in PageData.Character.skills" :key="skill.Label" md="6"
+												offset-md="3">
+												<v-slider color="green accent-2" track-color="grey darken-1"
+													:label="skill.Label" v-model="skill.Percent" thumb-label="always">
+												</v-slider>
+											</v-col>
+
+											<v-col md="6" offset-md="3">
+												<v-layout align-center justify-center>
+													<div class="text-xs-center">
+														<v-btn width="250" :loading="Button.Loading"
+															:disabled="Button.Loading" color="success"
+															@click="saveSkills()" color="success">SPARA
+														</v-btn>
+													</div>
+												</v-layout>
+											</v-col>
+										</v-row>
+									</v-container>
+								</v-card>
+							</div>
+							<div id="character-page-health" v-else-if="Navigation.Current == 4">
+								<v-card>
+									<v-container>
+										<v-card max-width="900" class="mx-auto">
+											<v-list subheader>
+												<v-subheader>Status</v-subheader>
+
+												<v-list-item>
+													<v-list-item-content>
+														<v-list-item-title>
+															HP -
+															{{ PageData.Character.dead ? 0 : PageData.Character.health -
+															100}}%
+														</v-list-item-title>
+													</v-list-item-content>
+
+													<v-list-item-icon>
+														<v-tooltip bottom>
+															<template v-slot:activator=" { on }">
+																<v-icon :disabled="PageData.Character.dead"
+																	@click="healCharacter()" v-on="on"
+																	color="green accent-2">
+																	mdi-bandage</v-icon>
+															</template>
+															<span>Hela</span>
+														</v-tooltip>
+													</v-list-item-icon>
+												</v-list-item>
+
+												<v-list-item>
+													<v-list-item-content>
+														<v-list-item-title>
+															{{ PageData.Character.dead ? 'Död' : 'Levande'}}
+														</v-list-item-title>
+													</v-list-item-content>
+
+													<v-list-item-icon>
+														<v-tooltip bottom>
+															<template v-slot:activator=" { on }">
+																<v-icon @click="reviveOrKillCharacter()" v-on="on"
+																	:color="healthColor">
+																	mdi-bottle-tonic-plus-outline</v-icon>
+															</template>
+															<span>{{ PageData.Character.dead ? 'återuppliva' : 'Döda'
+																}}</span>
+														</v-tooltip>
+													</v-list-item-icon>
+												</v-list-item>
+
+												<v-divider></v-divider>
+
+												<v-subheader>Skador
+													<v-spacer></v-spacer>
+													<v-tooltip bottom>
+														<template v-slot:activator="{ on }">
+															<v-icon @click="deleteAllDamages()" v-on="on"
+																style="color: rgba(168, 59, 59, 0.705);">
+																mdi-trash-can</v-icon>
+														</template>
+														<span>Rensa</span>
+													</v-tooltip>
+												</v-subheader>
+
+												<v-list-item v-for="damage in PageData.Character.damages"
+													:key="damage.Label">
+													<v-list-item-content>
+														<v-list-item-title
+															v-text="damage.Label + ' - Grad(' + damage.Intensity + ')'">
+														</v-list-item-title>
+													</v-list-item-content>
+
+													<v-list-item-icon>
+														<v-tooltip bottom>
+															<template v-slot:activator="{ on }">
+																<v-icon @click="deleteDamage(damage)" v-on="on"
+																	style="color: rgba(168, 59, 59, 0.705);">
+																	mdi-trash-can-outline</v-icon>
+															</template>
+															<span>Ta bort</span>
+														</v-tooltip>
+													</v-list-item-icon>
+												</v-list-item>
+											</v-list>
+										</v-card>
+									</v-container>
+								</v-card>
+							</div>
+							<div id="character-page-health" v-else-if="Navigation.Current == 5">
+								<v-card>
+									<v-container>
+										<v-card max-width="900" class="mx-auto">
+											<v-list subheader>
+												<v-subheader>Cooldowns</v-subheader>
+
+												<v-list-item v-for="cooldown in PageData.Character.cooldowns"
+													:key="cooldown.Id">
+													<v-list-item-content>
+														<v-list-item-title>
+															<span style="font-weight: bold;">{{ cooldown.Label }}</span>
+															- {{ cooldown.TimeLeft }}
+														</v-list-item-title>
+													</v-list-item-content>
+
+													<v-list-item-icon>
+														<v-tooltip bottom>
+															<template v-slot:activator="{ on }">
+																<v-icon @click="deleteCooldown(cooldown)" v-on="on"
+																	style="color: rgba(168, 59, 59, 0.705);">
+																	mdi-trash-can-outline</v-icon>
+															</template>
+															<span>Ta bort</span>
+														</v-tooltip>
+													</v-list-item-icon>
+												</v-list-item>
+											</v-list>
+										</v-card>
+									</v-container>
+								</v-card>
+							</div>
+
+							<v-bottom-navigation dark v-model="Navigation.Current" dark grow color="#ADD8E6" grow>
+								<v-btn>
+									<span>Karaktär</span>
+									<v-icon>mdi-account</v-icon>
+								</v-btn>
+
+								<v-btn>
+									<span>Fordon</span>
+									<v-icon>mdi-car</v-icon>
+								</v-btn>
+
+								<v-btn>
+									<span>Fastigheter</span>
+									<v-icon>mdi-home-city-outline</v-icon>
+								</v-btn>
+
+								<v-btn>
+									<span>Färdigheter</span>
+									<v-icon>mdi-poll</v-icon>
+								</v-btn>
+
+								<v-btn>
+									<span>Hälsa</span>
+									<v-icon>mdi-bottle-tonic-plus-outline</v-icon>
+								</v-btn>
+
+								<v-btn>
+									<span>Cooldowns</span>
+									<v-icon>mdi-timer-sand</v-icon>
+								</v-btn>
+							</v-bottom-navigation>
+						</div>
+					</div>
+
+					<div v-else-if="ActiveNavigation === 2">
+						<div id="top-list-page" v-if="Page == 'TOP_LIST_PAGE'">
+							<v-card tile>
+								<br>
+
+								<p class="headline text-xl-center" style="font-size: 200%; font-weight: bold;">
+									Topplistan
+								</p>
+
+								<v-container>
+									<v-row dense>
+										<v-col v-for="(list, index) in Toplist" cols="4">
+											<v-card class="mx-auto" max-width="344" outlined>
+												<v-list-item three-line>
+													<v-list-item-content>
+														<v-list-item-title class="headline text-md-center mb-1">
+															{{ list.Label }}</v-list-item-title>
+
+														<template v-for="(player, index) in list.Players">
+															<v-divider v-if="index > 0" :key="index" inset></v-divider>
+
+															<v-list-item :key="player.Name">
+																<v-list-item-avatar>
+																	<p>{{ player.Character.charAt(0) }}</p>
+																</v-list-item-avatar>
+
+																<v-list-item-content>
+																	<v-list-item-title>{{ player.Character }}
+																		({{ player.Name }})</v-list-item-title>
+
+																	<v-list-item-subtitle>
+																		{{ list.Prefix }}{{ player.Amount }}{{
+																		list.Suffix }}
+																	</v-list-item-subtitle>
+																</v-list-item-content>
+															</v-list-item>
+														</template>
+													</v-list-item-content>
+												</v-list-item>
+											</v-card>
+										</v-col>
+									</v-row>
+								</v-container>
+							</v-card>
+						</div>
+					</div>
+
+					<div v-else-if="ActiveNavigation === 3">
+						<div id="gangs-page" v-if="Page == 'GANGS_LIST'">
+							<v-card tile>
+								<v-card-title>
+									Gäng ({{ Gang.Gangs.length }}st)
+								</v-card-title>
+								<v-data-table sort-by="Name" :footer-props="{
+											showFirstLastPage: true,
+											itemsPerPageText: 'Gäng per sida',
+											itemsPerPageOptions: [10]
+										}" no-results-text="Inga resultat hittades..." no-data-text="Inga gäng kunde laddas in..."
+									:headers="Gang.GangHeaders" :items="Gang.Gangs">
+
+									<template v-slot:item="Gang">
+										<tr>
+											<td>{{ Gang.item.Name }}</td>
+											<td style="color:rgba(255, 0, 0, 0.664); font-weight: bold;">
+												{{ Gang.item.Data.Members ? Gang.item.Data.Members.length : 1 }} st</td>
+											<td>{{ Gang.item.Data.Creator }}</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:#ADD8E6;" v-bind="attrs"
+															v-on="on" medium dense
+															@click="changePage('GANG_PAGE', false, Gang.item)">
+															mdi-launch
+														</v-icon>
+													</template>
+													<span>Hantera - {{ Gang.item.Name }}</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+						<div id="gang-page" v-if="Page == 'GANG_PAGE'">
+							<v-card tile>
+								<v-card-title>
+									{{ PageData.Name }} Medlemmar
+									({{ PageData.Data.Members ? PageData.Data.Members.length : 1 }} st)
+								</v-card-title>
+								<v-data-table sort-by="Name" :footer-props="{
+											showFirstLastPage: true,
+											itemsPerPageText: 'Medlemmar per sida',
+											itemsPerPageOptions: [10]
+										}" no-results-text="Inga resultat hittades..." no-data-text="Inga medlemmar kunde laddas in..."
+									:headers="Gang.MemberHeaders" :items="PageData.Data.Members">
+
+									<template v-slot:item="Member">
+										<tr>
+											<td>{{ Member.item.Name }}</td>
+											<td style="color:rgba(255, 0, 0, 0.664); font-weight: bold;">
+												{{ Member.item.CharacterId }}</td>
+											<td>
+												<v-tooltip bottom>
+													<template v-slot:activator="{ on, attrs }">
+														<v-icon style="color:rgba(194, 36, 31, 0.534);" v-bind="attrs"
+															v-on="on" medium dense>
+															mdi-delete
+														</v-icon>
+													</template>
+													<span>Sparka - {{ Member.item.Name }}</span>
+												</v-tooltip>
+											</td>
+										</tr>
+									</template>
+								</v-data-table>
+							</v-card>
+						</div>
+					</div>
+					<div v-else-if="ActiveNavigation === 4">
+						<v-card tile>
+							<v-container>
+								<v-row justify="space-around">
+									<v-card elevation="20" width="800" height="600">
+										<v-tabs grow centered>
+											<v-tab @click="changeStocks('DELIVERY')">Leverans</v-tab>
+											<v-tab @click="changeStocks('LUCY')">Lucy</v-tab>
+										</v-tabs>
+
+										<br>
+
+										<v-col cols="12" sm="12" style="overflow:scroll; max-height: 80%;">
+											<br>
+											<div v-for="item in Stocks.AvailableItems[Stocks.Page]">
+												<v-card-text class="pt-0">
+													<v-slider v-model="item.OrderedCount" :rules="getRules(item)"
+														:max="item.MaxCount" :label="getItemLabel(item)" step="1"
+														thumb-label="always" ticks></v-slider>
+												</v-card-text>
+											</div>
+										</v-col>
+
+										<v-col cols="12" sm="12">
+											<v-layout align-center justify-center>
+												<v-btn color="success" @click="saveStonks()">SPARA
+												</v-btn>
+											</v-layout>
+										</v-col>
+									</v-card>
+								</v-row>
+							</v-container>
+						</v-card>
+					</div>
+					<div v-else-if="ActiveNavigation === 1">
+						<div id="companies-page" v-if="Page == 'COMPANIES_PAGE'">
+							<v-card tile>
+								<v-container>
+									<v-row dense>
+										<v-col offset-md="4" cols="4">
+											<v-card class="mx-auto" max-width="344" outlined>
+												<v-list-item three-line>
+													<v-list-item-content>
+														<v-list-item-title class="headline text-md-center mb-1">
+															Företag (Online)
+														</v-list-item-title>
+
+														<template v-for="(company, index) in Companies"
+															:key="company.Name">
+															<v-divider v-if="index > 0" :key="index" inset></v-divider>
+
+															<v-list-item :key="company.Name">
+																<v-list-item-avatar tile size="40">
+																	<v-icon large>
+																		mdi-{{ getJobIcon(company.Name) }}
+																	</v-icon>
+																</v-list-item-avatar>
+
+																<v-list-item-content>
+																	<v-list-item-title>
+																		{{ company.Name }}
+																	</v-list-item-title>
+
+																	<v-list-item-subtitle>
+																		<span style="font-weight: bold;">{{
+																			company.HasJob }}st</span> arbetare, <span
+																			style="font-weight: bold;">{{
+																			company.InDuty
+																			}}st</span> i tjänst och <span
+																			style="font-weight: bold;">{{
+																			company.HasJob - company.InDuty}}st</span>
+																		ur
+																		tjänst.
+																	</v-list-item-subtitle>
+																</v-list-item-content>
+															</v-list-item>
+														</template>
+												</v-list-item>
+											</v-card>
+										</v-col>
+									</v-row>
+								</v-container>
+							</v-card>
+						</div>
+					</div>
+				</div>
+
+				<v-dialog v-model="Dialog.Show" max-width="400">
+					<v-card>
+						<v-card-title class="headline">{{ Dialog.Header }}</v-card-title>
+
+						<template v-if="!Dialog.Multi">
+							<v-card-text>
+								{{ Dialog.Text }}
+							</v-card-text>
+						</template>
+						<template v-else>
+							<v-autocomplete v-model="Dialog.MultiValue" :items="Dialog.Multi" dense filled
+								label="Alternativ">
+							</v-autocomplete>
+						</template>
+
+						<v-card-actions>
+							<v-spacer></v-spacer>
+
+							<v-btn outlined :color="Dialog.CancelButtonColor + ' darken-1'" text
+								@click="Dialog.ButtonCallback(false)">
+								{{ Dialog.CancelButton }}
+							</v-btn>
+
+							<v-btn outlined :color="Dialog.ConfirmButtonColor + ' darken-1'" text
+								@click="Dialog.ButtonCallback(true)">
+								{{ Dialog.ConfirmButton }}
+							</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+
+				<v-bottom-navigation
+					v-if="Page === 'PLAYERS_LIST' || Page.includes('GANG') || Page === 'TOP_LIST_PAGE' || Page === 'STONKS_LIST' || Page === 'COMPANIES_PAGE'"
+					v-model="ActiveNavigation" dark grow color="#ADD8E6">
+					<v-btn @click="changePage('PLAYERS_LIST', true)">
+						<span>Spelare</span>
+						<v-icon>mdi-account</v-icon>
+					</v-btn>
+
+					<v-btn @click="changePage('COMPANIES_PAGE', true)">
+						<span>Företag</span>
+						<v-icon>mdi-briefcase</v-icon>
+					</v-btn>
+
+					<v-btn @click="changePage('TOP_LIST_PAGE', true)">
+						<span>Topplista</span>
+						<v-icon>mdi-playlist-star</v-icon>
+					</v-btn>
+
+					<v-btn @click="changePage('GANGS_LIST', true)">
+						<span>Gäng</span>
+						<v-icon>mdi-account-cowboy-hat</v-icon>
+					</v-btn>
+
+					<v-btn @click="changePage('STONKS_LIST', true)">
+						<span>Stonks</span>
+						<v-icon>mdi-chart-box</v-icon>
+					</v-btn>
+				</v-bottom-navigation>
+				<v-card v-else-if="Page === 'PLAYER'">
+					<v-footer dark class="font-weight-medium">
+						<v-col class="text-center" cols="12">
+							{{ new Date().getFullYear() }} — <strong>Retribution Roleplay</strong>
+						</v-col>
+					</v-footer>
+				</v-card>
+			</v-main>
+		</v-app>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+	<script src="js/admin.js"></script>
+</body>
+
+</html>
