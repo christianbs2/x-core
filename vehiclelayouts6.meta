@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <CVehicleMetadataMgr>
+<CVehicleLayoutInfos>
  <AnimRateSets>
 	<Item type="CAnimRateSet">
 		<Name>DEFAULT_ANIM_RATE_SET</Name>
@@ -127,6 +128,7 @@
 		</NoAnimCombatExit>
 	</Item>
   </AnimRateSets>
+  <CVehicleLayoutInfos>
   <ClipSetMaps>
     <Item type="CClipSetMap">
       <Name>COMMON_CLIPSET_MAP_BICYCLE_LEFT</Name>
